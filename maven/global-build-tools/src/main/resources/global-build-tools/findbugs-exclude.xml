@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+
+  <!-- see http://findbugs.sourceforge.net/manual/filter.html -->
+
+  <!-- Disable some specifc findbugs checks -->
+  <Match>
+    <Bug pattern="
+        NM_SAME_SIMPLE_NAME_AS_INTERFACE,
+        DM_CONVERT_CASE,
+        SIC_INNER_SHOULD_BE_STATIC_ANON,
+        SE_INNER_CLASS,
+        BC_UNCONFIRMED_CAST,
+        UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR,
+        DLS_DEAD_LOCAL_STORE,
+        NM_SAME_SIMPLE_NAME_AS_SUPERCLASS,
+        EI_EXPOSE_REP,
+        EI_EXPOSE_REP2,
+        VA_FORMAT_STRING_USES_NEWLINE
+    "/>
+  </Match>
+
+</FindBugsFilter>
