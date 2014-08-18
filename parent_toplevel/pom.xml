@@ -166,7 +166,6 @@
             <projectName>wcm.io</projectName>
           </configuration>
         </plugin>
-
       </plugins>
 
     </pluginManagement>
@@ -177,7 +176,6 @@
     <profile>
       <id>release</id>
       <build>
-
         <plugins>
           <!-- configure staging process at sonatype.-->
           <plugin>
