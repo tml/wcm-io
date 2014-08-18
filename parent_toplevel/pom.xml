@@ -14,6 +14,9 @@
   <version>0.1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
+  <name>io.wcm.parent_toplevel</name>
+  <description>Toplevel POM for all wcm.io Maven projects.</description>
+
   <inceptionYear>2014</inceptionYear>
 
   <organization>
@@ -27,6 +30,14 @@
       <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
     </license>
   </licenses>
+  
+  <developers>
+    <developer>
+      <name>Stefan Seifert</name>
+      <organization>pro!vision GmbH</organization>
+      <organizationUrl>http://www.pro-vision.de</organizationUrl>
+    </developer>
+  </developers>
 
   <properties>
 
