@@ -10,6 +10,14 @@
     <relativePath/>
   </parent>
 
+  <groupId>io.wcm</groupId>
+  <artifactId>io.wcm.root</artifactId>
+  <version>1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <name>io.wcm.root</name>
+  <description>Root POM for wcm.io Maven hierarchy.</description>
+
   <inceptionYear>2014</inceptionYear>
 
   <organization>
@@ -23,11 +31,6 @@
       <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
     </license>
   </licenses>
-
-  <groupId>io.wcm</groupId>
-  <artifactId>io.wcm.root</artifactId>
-  <version>1-SNAPSHOT</version>
-  <packaging>pom</packaging>
 
   <modules>
     <module>parent_toplevel</module>
