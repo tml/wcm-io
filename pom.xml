@@ -32,10 +32,23 @@
     </license>
   </licenses>
 
+  <scm>
+    <connection>scm:git:git@github.com:wcm-io/wcm-io.git</connection>
+    <developerConnection>scm:git:git@github.com:wcm-io/wcm-io.git</developerConnection>
+    <url>git@github.com:wcm-io/wcm-io.git</url>
+  </scm>
+
   <modules>
     <module>parent_toplevel</module>
     <module>testing</module>
   </modules>
+  
+  <properties>
+  
+    <!-- github settings -->
+    <github.global.server>github</github.global.server>
+  
+  </properties>
 
   <build>
     <plugins>
@@ -75,6 +88,31 @@
         </configuration>
       </plugin>
 
+      <!-- GitHub site plug-in for deployment to GitHub pages -->
+      <plugin>
+        <groupId>com.github.github</groupId>
+        <artifactId>site-maven-plugin</artifactId>
+        <version>0.9</version>
+        <configuration>
+          <branch>refs/heads/master</branch>
+          <message>Creating site for ${project.artifactId}, ${project.version}</message>
+          <path>${project.distributionManagement.site.url}</path>
+          <merge>true</merge>
+          <noJekyll>true</noJekyll>
+          <repositoryOwner>wcm-io</repositoryOwner>
+          <repositoryName>wcm-io.github.io</repositoryName>
+        </configuration>
+        <executions>
+          <execution>
+            <id>github-site</id>
+            <goals>
+              <goal>site</goal>
+            </goals>
+            <phase>site-deploy</phase>
+          </execution>
+        </executions>
+      </plugin>
+
     </plugins>
     <pluginManagement>
       <plugins>
@@ -93,5 +131,13 @@
       </plugins>
     </pluginManagement>
   </build>
+  
+  <distributionManagement>
+    <site>
+      <id>github-pages-site</id>
+      <name>Deployment through GitHub's site deployment plugin</name>
+      <url/>
+    </site>
+  </distributionManagement>
 
 </project>

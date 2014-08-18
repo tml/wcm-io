@@ -63,6 +63,10 @@
     <wcm-io-snapshotRepositoryUrl>https://oss.sonatype.org/content/repositories/snapshots</wcm-io-snapshotRepositoryUrl>
     <wcm-io-releaseRepositoryId>ossrh</wcm-io-releaseRepositoryId>
     <wcm-io-releaseRepositoryUrl>https://oss.sonatype.org/service/local/staging/deploy/maven2/</wcm-io-releaseRepositoryUrl>
+    
+    <!-- github settings -->
+    <github.global.server>github</github.global.server>
+    
   </properties>
 
   <!-- default dependencies for all projects -->
@@ -165,6 +169,31 @@
         </configuration>
       </plugin>
 
+      <!-- GitHub site plug-in for deployment to GitHub pages -->
+      <plugin>
+        <groupId>com.github.github</groupId>
+        <artifactId>site-maven-plugin</artifactId>
+        <version>0.9</version>
+        <configuration>
+          <branch>refs/heads/master</branch>
+          <message>Creating site for ${project.artifactId}, ${project.version}</message>
+          <path>${project.distributionManagement.site.url}</path>
+          <merge>true</merge>
+          <noJekyll>true</noJekyll>
+          <repositoryOwner>wcm-io</repositoryOwner>
+          <repositoryName>wcm-io.github.io</repositoryName>
+        </configuration>
+        <executions>
+          <execution>
+            <id>github-site</id>
+            <goals>
+              <goal>site</goal>
+            </goals>
+            <phase>site-deploy</phase>
+          </execution>
+        </executions>
+      </plugin>
+
     </plugins>
 
     <!-- plugin management -->
@@ -265,6 +294,7 @@
       </build>
     </profile>
   </profiles>
+
   <distributionManagement>
     <repository>
       <id>${wcm-io-releaseRepositoryId}</id>
@@ -274,6 +304,11 @@
       <id>${wcm-io-snapshotRepositoryId}</id>
       <url>${wcm-io-snapshotRepositoryUrl}</url>
     </snapshotRepository>
+    <site>
+      <id>github-pages-site</id>
+      <name>Deployment through GitHub's site deployment plugin</name>
+      <url>${project.artifactId}</url>
+    </site>
   </distributionManagement>
-  <!-- End maven central config -->
+
 </project>
