@@ -50,6 +50,13 @@
         ]]>
       </bottomDescription>
       <pages>
+        <index>
+          <!-- no breadcrumbs on the main index page -->
+          <breadcrumbs>false</breadcrumbs>
+          <!-- no ToC on the main index page -->
+          <toc>false</toc>
+          <markPageHeader>false</markPageHeader>
+        </index>
         <contribute>
           <breadcrumbs>false</breadcrumbs>
         </contribute>

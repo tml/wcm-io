@@ -50,7 +50,7 @@
         ]]>
       </bottomDescription>
       <pages>
-        <index><!-- 'project="io.wcm.root"' does not work if artifactId contains dots? -->
+        <index>
           <!-- Override the title -->
           <titleTemplate>wcm.io</titleTemplate>
           <!-- no breadcrumbs on the main index page -->

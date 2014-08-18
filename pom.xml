@@ -17,6 +17,7 @@
 
   <name>io.wcm.root</name>
   <description>Root POM for wcm.io Maven hierarchy.</description>
+  <url>http://wcm.io</url>
 
   <inceptionYear>2014</inceptionYear>
 
@@ -96,7 +97,7 @@
         <configuration>
           <branch>refs/heads/master</branch>
           <message>Creating site for ${project.artifactId}, ${project.version}</message>
-          <path>${project.distributionManagement.site.url}</path>
+          <path></path>
           <merge>true</merge>
           <noJekyll>true</noJekyll>
           <repositoryOwner>wcm-io</repositoryOwner>
