@@ -11,7 +11,7 @@
   <description>Definition of rules for static code analysis tools and IDEs.</description>
 
   <scm>
-    <developerConnection>scm:git:git@github.com:pro-vision/wcm-io/tree/release-macentral.git</developerConnection>
+    <developerConnection>scm:git:git@github.com:pro-vision/wcm-io.git</developerConnection>
     <tag>io.wcm.maven.global-build-tools-0.8-sonatype-test</tag>
   </scm>
 
