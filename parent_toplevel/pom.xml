@@ -16,6 +16,7 @@
 
   <name>io.wcm.parent_toplevel</name>
   <description>Toplevel POM for all wcm.io Maven projects.</description>
+  <url>http://wcm.io/</url>
 
   <inceptionYear>2014</inceptionYear>
 
@@ -23,10 +24,6 @@
     <name>wcm.io</name>
     <url>http://wcm.io</url>
   </organization>
-
-  <name>wcm.io</name>
-  <description>Todo: add some valid text</description>
-  <url>http://wcm.io/</url>
 
   <developers>
     <developer>
@@ -50,14 +47,6 @@
     </license>
   </licenses>
   
-  <developers>
-    <developer>
-      <name>Stefan Seifert</name>
-      <organization>pro!vision GmbH</organization>
-      <organizationUrl>http://www.pro-vision.de</organizationUrl>
-    </developer>
-  </developers>
-
   <properties>
 
     <!-- Sling instance parameters -->
@@ -69,6 +58,11 @@
     <build.compiler.source>1.7</build.compiler.source>
     <build.compiler.target>1.7</build.compiler.target>
 
+    <!-- repository settings -->
+    <wcm-io-snapshotRepositoryId>ossrh</wcm-io-snapshotRepositoryId>
+    <wcm-io-snapshotRepositoryUrl>https://oss.sonatype.org/content/repositories/snapshots</wcm-io-snapshotRepositoryUrl>
+    <wcm-io-releaseRepositoryId>ossrh</wcm-io-releaseRepositoryId>
+    <wcm-io-releaseRepositoryUrl>https://oss.sonatype.org/service/local/staging/deploy/maven2/</wcm-io-releaseRepositoryUrl>
   </properties>
 
   <!-- default dependencies for all projects -->
@@ -172,11 +166,9 @@
             <projectName>wcm.io</projectName>
           </configuration>
         </plugin>
-
       </plugins>
 
     </pluginManagement>
-
   </build>
 
   <!-- configuration to deploy into maven central -->
@@ -248,14 +240,14 @@
     </profile>
   </profiles>
   <distributionManagement>
-    <snapshotRepository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
     <repository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+      <id>${wcm-io-releaseRepositoryId}</id>
+      <url>${wcm-io-releaseRepositoryUrl}</url>
     </repository>
+    <snapshotRepository>
+      <id>${wcm-io-snapshotRepositoryId}</id>
+      <url>${wcm-io-snapshotRepositoryUrl}</url>
+    </snapshotRepository>
   </distributionManagement>
   <!-- End maven central config -->
 </project>
