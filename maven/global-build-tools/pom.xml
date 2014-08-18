@@ -4,15 +4,15 @@
 
   <groupId>io.wcm.maven</groupId>
   <artifactId>io.wcm.maven.global-build-tools</artifactId>
-  <version>1-SNAPSHOT</version>
+  <version>0.8-sonatype-test</version>
   <packaging>jar</packaging>
   
   <name>io.wcm.maven.global-build-tools</name>
   <description>Definition of rules for static code analysis tools and IDEs.</description>
 
   <scm>
-    <developerConnection>scm:git:git@github.com:pro-vision/wcm-io-sandbox.git</developerConnection>
-    <tag>HEAD</tag>
+    <developerConnection>scm:git:git@github.com:pro-vision/wcm-io/tree/release-macentral.git</developerConnection>
+    <tag>io.wcm.maven.global-build-tools-0.8-sonatype-test</tag>
   </scm>
 
   <inceptionYear>2014</inceptionYear>
