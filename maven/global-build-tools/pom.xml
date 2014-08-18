@@ -42,6 +42,11 @@
     <!-- define default encoding for all source/resource files -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
+    <!-- repository settings -->
+    <wcm-io-snapshotRepositoryId>ossrh</wcm-io-snapshotRepositoryId>
+    <wcm-io-snapshotRepositoryUrl>https://oss.sonatype.org/content/repositories/snapshots</wcm-io-snapshotRepositoryUrl>
+    <wcm-io-releaseRepositoryId>ossrh</wcm-io-releaseRepositoryId>
+    <wcm-io-releaseRepositoryUrl>https://oss.sonatype.org/service/local/staging/deploy/maven2/</wcm-io-releaseRepositoryUrl>
   </properties>
 
   <build>
@@ -148,12 +153,12 @@
 
   <distributionManagement>
     <repository>
-      <id>${wcm-io-releaseRepositoryId}</id>
-      <url>${wcm-io-releaseRepositoryUrl}</url>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
     </repository>
     <snapshotRepository>
-      <id>${wcm-io-snapshotRepositoryId}</id>
-      <url>${wcm-io-snapshotRepositoryUrl}</url>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
     </snapshotRepository>
   </distributionManagement>
 
