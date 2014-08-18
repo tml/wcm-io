@@ -16,7 +16,7 @@
 
   <name>io.wcm.parent_toplevel</name>
   <description>Toplevel POM for all wcm.io Maven projects.</description>
-  <url>http://wcm.io/${project.artifactId}</url>
+  <url>http://wcm.io/${project.distributionManagement.site.url}</url>
 
   <inceptionYear>2014</inceptionYear>
 
@@ -177,7 +177,7 @@
         <configuration>
           <branch>refs/heads/master</branch>
           <message>Creating site for ${project.artifactId}, ${project.version}</message>
-          <path>${project.artifactId}</path>
+          <path>${project.distributionManagement.site.url}</path>
           <merge>true</merge>
           <noJekyll>true</noJekyll>
           <repositoryOwner>wcm-io</repositoryOwner>
@@ -307,7 +307,7 @@
     <site>
       <id>github-pages-site</id>
       <name>Deployment through GitHub's site deployment plugin</name>
-      <url/>
+      <url>modules</url>
     </site>
   </distributionManagement>
 

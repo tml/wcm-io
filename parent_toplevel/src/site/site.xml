@@ -51,8 +51,6 @@
       </bottomDescription>
       <pages>
         <index>
-          <!-- no breadcrumbs on the main index page -->
-          <breadcrumbs>false</breadcrumbs>
           <!-- no ToC on the main index page -->
           <toc>false</toc>
           <markPageHeader>false</markPageHeader>
@@ -94,7 +92,7 @@
     </links>
 
     <breadcrumbs>
-      <item name="wcm.io" href="/" />
+      <item name="wcm.io" href="http://wcm.io" />
     </breadcrumbs>
   
     <menu name="Main" inherit="top">
