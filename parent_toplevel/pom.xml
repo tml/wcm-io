@@ -16,7 +16,7 @@
 
   <name>io.wcm.parent_toplevel</name>
   <description>Toplevel POM for all wcm.io Maven projects.</description>
-  <url>http://wcm.io/${project.distributionManagement.site.url}</url>
+  <url>${site.url}/${project.artifactId}/</url>
 
   <inceptionYear>2014</inceptionYear>
 
@@ -30,7 +30,6 @@
       <name>Stefan Seifert</name>
       <organization>pro!vision GmbH</organization>
       <organizationUrl>https://www.pro-vision.de</organizationUrl>
-      <url>https://github.com/stefanseifert</url>
     </developer>
   </developers>
 
@@ -58,6 +57,11 @@
     <build.compiler.source>1.7</build.compiler.source>
     <build.compiler.target>1.7</build.compiler.target>
     
+    <!-- site settings -->
+    <site.url>http://wcm.io</site.url>
+    <site.deploy.id>github-pages</site.deploy.id>
+    <site.deploy.url/>
+
     <!-- github settings -->
     <github.global.server>github</github.global.server>
     
@@ -167,7 +171,6 @@
       <plugin>
         <groupId>com.github.github</groupId>
         <artifactId>site-maven-plugin</artifactId>
-        <version>0.9</version>
         <configuration>
           <branch>refs/heads/master</branch>
           <message>Creating site for ${project.artifactId}, ${project.version}</message>
@@ -222,9 +225,9 @@
 
   <distributionManagement>
     <site>
-      <id>github-pages-site</id>
+      <id>${site.deploy.id}</id>
       <name>Deployment through GitHub's site deployment plugin</name>
-      <url>modules</url>
+      <url>${site.deploy.url}${project.artifactId}</url>
     </site>
   </distributionManagement>
 

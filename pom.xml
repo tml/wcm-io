@@ -17,7 +17,7 @@
 
   <name>io.wcm.root</name>
   <description>Root POM for wcm.io Maven hierarchy.</description>
-  <url>http://wcm.io</url>
+  <url>${site.url}</url>
 
   <inceptionYear>2014</inceptionYear>
 
@@ -46,6 +46,11 @@
   
   <properties>
   
+    <!-- site settings -->
+    <site.url>http://wcm.io</site.url>
+    <site.deploy.id>github-pages</site.deploy.id>
+    <site.deploy.url/>
+
     <!-- github settings -->
     <github.global.server>github</github.global.server>
   
@@ -93,7 +98,6 @@
       <plugin>
         <groupId>com.github.github</groupId>
         <artifactId>site-maven-plugin</artifactId>
-        <version>0.9</version>
         <configuration>
           <branch>refs/heads/master</branch>
           <message>Creating site for ${project.artifactId}, ${project.version}</message>
@@ -135,9 +139,9 @@
   
   <distributionManagement>
     <site>
-      <id>github-pages-site</id>
+      <id>${site.deploy.id}</id>
       <name>Deployment through GitHub's site deployment plugin</name>
-      <url/>
+      <url>${site.deploy.url}</url>
     </site>
   </distributionManagement>
 
