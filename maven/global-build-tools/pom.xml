@@ -153,12 +153,12 @@
 
   <distributionManagement>
     <repository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+      <id>${wcm-io-releaseRepositoryId}</id>
+      <url>${wcm-io-releaseRepositoryUrl}</url>
     </repository>
     <snapshotRepository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+      <id>${wcm-io-snapshotRepositoryId}</id>
+      <url>${wcm-io-snapshotRepositoryUrl}</url>
     </snapshotRepository>
   </distributionManagement>
 
