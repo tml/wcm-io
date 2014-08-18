@@ -4,7 +4,7 @@
 
   <groupId>io.wcm.maven</groupId>
   <artifactId>io.wcm.maven.global-build-tools</artifactId>
-  <version>1-SNAPSHOT</version>
+  <version>0.1-sonatype-test</version>
   <packaging>jar</packaging>
   
   <name>io.wcm.maven.global-build-tools</name>
@@ -15,7 +15,7 @@
     <connection>scm:git:git@github.com:wcm-io/wcm-io.git</connection>
     <developerConnection>scm:git:git@github.com:wcm-io/wcm-io.git</developerConnection>
     <url>git@github.com:wcm-io/wcm-io.git</url>
-    <tag>HEAD</tag>
+    <tag>io.wcm.maven.global-build-tools-0.1-sonatype-test</tag>
   </scm>
 
   <inceptionYear>2014</inceptionYear>
