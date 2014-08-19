@@ -39,6 +39,13 @@
   <description>Project contains the public website content for the wcm.io site root.</description>
   <url>${site.url}</url>
 
+  <scm>
+    <connection>scm:git:git@github.com:wcm-io/wcm-io.git</connection>
+    <developerConnection>scm:git:git@github.com:wcm-io/wcm-io.git</developerConnection>
+    <url>https://github.com/wcm-io/wcm-io</url>
+    <tag>HEAD</tag>
+  </scm>
+
   <build>
     <plugins>
 
