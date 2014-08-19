@@ -6,7 +6,7 @@ wcm.io is an Open Source project which provides libraries and extensions for AEM
 
 wcm.io is a collection of independent modules which can be used standalone or in combination.
 
-Overview of modules categories:
+Overview of module categories:
 
 * [Testing][testing]
 
