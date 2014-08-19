@@ -79,6 +79,9 @@
         <contribute>
           <breadcrumbs>false</breadcrumbs>
         </contribute>
+        <maven>
+          <breadcrumbs>false</breadcrumbs>
+        </maven>
         <!-- Disable source highlighting for Maven reports -->
         <source-repository>
           <highlightJs>false</highlightJs>
@@ -117,6 +120,7 @@
   
     <menu name="Main" inherit="top">
       <item name="Home" href="http://wcm.io" />
+      <item name="Maven" href="http://wcm.io/maven.html" />
       <item name="GitHub project" href="http://github.com/wcm-io/wcm-io/" />
       <item name="License" href="license.html" />
     </menu>
