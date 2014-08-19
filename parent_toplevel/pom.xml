@@ -18,6 +18,13 @@
   <description>Toplevel POM for all wcm.io Maven projects.</description>
   <url>${site.url}/${site.url.module.prefix}/</url>
 
+  <scm>
+    <connection>scm:git:git@github.com:wcm-io/wcm-io.git</connection>
+    <developerConnection>scm:git:git@github.com:wcm-io/wcm-io.git</developerConnection>
+    <url>git@github.com:wcm-io/wcm-io.git</url>
+    <tag>HEAD</tag>
+  </scm>
+
   <inceptionYear>2014</inceptionYear>
 
   <organization>
@@ -32,12 +39,6 @@
       <organizationUrl>https://www.pro-vision.de</organizationUrl>
     </developer>
   </developers>
-
-  <scm>
-    <connection>scm:git:git@github.com:wcm-io/wcm-io.git</connection>
-    <developerConnection>scm:git:git@github.com:wcm-io/wcm-io.git</developerConnection>
-    <url>git@github.com:wcm-io/wcm-io.git</url>
-  </scm>
 
   <licenses>
     <license>
