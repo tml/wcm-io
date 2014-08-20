@@ -219,6 +219,7 @@
             <instructions>
               <Bundle-Category>wcm.io</Bundle-Category>
               <Bundle-Vendor>wcm.io</Bundle-Vendor>
+              <Bundle-Name>wcm.io ${project.name}</Bundle-Name>
             </instructions>
           </configuration>
         </plugin>
