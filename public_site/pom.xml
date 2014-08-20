@@ -49,6 +49,15 @@
   <build>
     <plugins>
 
+      <!-- do not deploy this project into maven repository -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+
       <!-- GitHub site plug-in for deployment to GitHub pages -->
       <plugin>
         <groupId>com.github.github</groupId>
