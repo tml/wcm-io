@@ -54,7 +54,7 @@
             <enabled>false</enabled>
           </snapshots>
         </repository>
-  
+
         <repository>
           <id>oss-snapshots</id>
           <url>https://oss.sonatype.org/content/repositories/snapshots/io/wcm/</url>
@@ -68,7 +68,7 @@
         </repository>
 
       </repositories>
-      
+
       <pluginRepositories>
 
         <pluginRepository>
@@ -96,7 +96,7 @@
             <enabled>false</enabled>
           </snapshots>
         </pluginRepository>
-  
+
         <pluginRepository>
           <id>oss-snapshots</id>
           <url>https://oss.sonatype.org/content/repositories/snapshots/io/wcm/</url>
@@ -110,7 +110,7 @@
         </pluginRepository>
 
       </pluginRepositories>
-      
+
     </profile>
 
   </profiles>
@@ -118,5 +118,5 @@
   <activeProfiles>
     <activeProfile>default</activeProfile>
   </activeProfiles>
- 
+
 </settings>
