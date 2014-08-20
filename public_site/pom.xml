@@ -8,9 +8,9 @@
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
-  
+
        http://www.apache.org/licenses/LICENSE-2.0
-  
+
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -39,6 +39,13 @@
   <description>Project contains the public website content for the wcm.io site root.</description>
   <url>${site.url}</url>
 
+  <scm>
+    <connection>scm:git:git@github.com:wcm-io/wcm-io.git</connection>
+    <developerConnection>scm:git:git@github.com:wcm-io/wcm-io.git</developerConnection>
+    <url>https://github.com/wcm-io/wcm-io</url>
+    <tag>HEAD</tag>
+  </scm>
+
   <build>
     <plugins>
 
@@ -53,7 +60,7 @@
 
     </plugins>
   </build>
-  
+
   <distributionManagement>
     <site>
       <id>${site.deploy.id}</id>
