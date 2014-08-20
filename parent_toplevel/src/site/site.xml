@@ -76,12 +76,6 @@
           <toc>false</toc>
           <markPageHeader>false</markPageHeader>
         </index>
-        <contribute>
-          <breadcrumbs>false</breadcrumbs>
-        </contribute>
-        <maven>
-          <breadcrumbs>false</breadcrumbs>
-        </maven>
         <!-- Disable source highlighting for Maven reports -->
         <source-repository>
           <highlightJs>false</highlightJs>
@@ -120,6 +114,7 @@
   
     <menu name="Main" inherit="top">
       <item name="Home" href="http://wcm.io" />
+      <item name="Platforms" href="http://wcm.io/platforms.html" />
       <item name="Maven" href="http://wcm.io/maven.html" />
       <item name="GitHub project" href="http://github.com/wcm-io/wcm-io/" />
       <item name="License" href="license.html" />
@@ -135,6 +130,7 @@
     </menu>
     <menu name="Contribute" inherit="top">
       <item name="Contribute" href="http://wcm.io/contribute.html" />
+      <item name="Manifest" href="http://wcm.io/manifest.html" />
       <item name="Issues" href="http://github.com/wcm-io/wcm-io/issues/" />
       <item name="Fork on GitHub" href="http://github.com/wcm-io/wcm-io/" />
     </menu>

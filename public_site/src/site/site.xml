@@ -36,6 +36,18 @@
           <toc>false</toc>
           <markPageHeader>false</markPageHeader>
         </index>
+        <maven>
+          <breadcrumbs>false</breadcrumbs>
+        </maven>
+        <platforms>
+          <breadcrumbs>false</breadcrumbs>
+        </platforms>
+        <contribute>
+          <breadcrumbs>false</breadcrumbs>
+        </contribute>
+        <manifest>
+          <breadcrumbs>false</breadcrumbs>
+        </manifest>
       </pages>
     </reflowSkin>
   </custom>
