@@ -23,4 +23,4 @@ install: "mvn -s ./.travis.maven-settings.xml clean"
 script: "mvn -s ./.travis.maven-settings.xml -Pcontinuous-integration -U -Dmaven.javadoc.skip=true install"
 cache:
   directories:
-  - $HOME/.m2
+  - ./.m2
