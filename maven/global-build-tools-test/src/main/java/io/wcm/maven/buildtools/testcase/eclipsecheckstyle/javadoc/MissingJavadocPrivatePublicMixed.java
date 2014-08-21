@@ -21,7 +21,7 @@ package io.wcm.maven.buildtools.testcase.eclipsecheckstyle.javadoc;
 
 /*
  * Test for missing javadoc comments.
- * Expected warnings: 2
+ * Expected warnings: 0
  */
 class MissingJavadocPrivatePublicMixed<T> implements Comparable<T> {
 

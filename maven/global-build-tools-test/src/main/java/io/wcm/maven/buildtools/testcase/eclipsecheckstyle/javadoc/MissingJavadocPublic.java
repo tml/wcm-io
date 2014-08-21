@@ -21,7 +21,7 @@ package io.wcm.maven.buildtools.testcase.eclipsecheckstyle.javadoc;
 
 /*
  * Test for missing javadoc comments.
- * Expected warnings: 8 (javadoc) + 2 others
+ * Expected warnings: 11 checkstyle
  */
 // 1 warning
 public class MissingJavadocPublic<T> implements Comparable<T> {
@@ -70,7 +70,7 @@ public class MissingJavadocPublic<T> implements Comparable<T> {
    * @return Object
    */
   public <T2 extends Object> T2 methodTypeParameter() {
-    // no warning
+    // 1 warning
     return null;
   }
 
