@@ -5,12 +5,173 @@
 
   <module name="TreeWalker">
     <property name="tabWidth" value="2"/>
+    <module name="FileContentsHolder"/>
     
+    <!-- Naming conventions -->
+    <!-- http://checkstyle.sourceforge.net/config_naming.html -->
+    <module name="MemberName"/>
+    <module name="StaticVariableName"/>
+    <module name="MethodName"/>
+    <module name="ParameterName"/>
+    <module name="LocalVariableName"/>
+    <module name="ConstantName">
+      <!-- Allow "log" as shortcut -->
+      <property name="format" value="^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$|^log$"/>
+    </module>
+    <module name="PackageName"/>
+    <module name="TypeName"/>
+    <module name="LocalFinalVariableName"/>
+<!--    <module name="AbstractClassName"/>-->
+    <module name="ClassTypeParameterName">
+      <!-- Generic types same rules as TypeName -->
+      <property name="format" value="^[A-Z][a-zA-Z0-9]*$"/>
+    </module>
+    <module name="MethodTypeParameterName">
+      <!-- Generic types same rules as TypeName -->
+      <property name="format" value="^[A-Z][a-zA-Z0-9]*$"/>
+    </module>
+    
+    <!-- Imports -->
+    <!-- http://checkstyle.sourceforge.net/config_imports.html -->
+    <module name="AvoidStarImport">
+      <property name="allowStaticMemberImports" value="true"/>
+    </module>
+    <module name="IllegalImport"/>
+    <module name="RedundantImport"/>
+    
+    <!-- Size Violations -->
+    <!-- http://checkstyle.sourceforge.net/config_sizes.html -->
+    <module name="LineLength">
+      <property name="severity" value="info"/>
+      <property name="max" value="160"/>
+      <property name="tabWidth" value="2"/>
+    </module>
+    <module name="LineLength">
+      <property name="max" value="220"/>
+      <property name="tabWidth" value="2"/>
+    </module>
+    <module name="MethodLength">
+      <property name="max" value="300"/>
+    </module>
+    <module name="AnonInnerLength">
+      <property name="max" value="30"/>
+    </module>
+    <module name="ParameterNumber">
+      <property name="max" value="10"/>
+    </module>
+    <module name="OuterTypeNumber"/>
+    <module name="MethodCount"/>
+    
+    <!-- Whitespaces -->
+    <!-- http://checkstyle.sourceforge.net/config_whitespace.html -->
+    <module name="GenericWhitespace"/>
+    <module name="EmptyForIteratorPad"/>
+    <module name="NoWhitespaceAfter">
+      <property name="tokens" value="BNOT,DEC,DOT,INC,LNOT,UNARY_MINUS,UNARY_PLUS,TYPECAST"/>
+    </module>
+    <module name="NoWhitespaceBefore"/>
+    <module name="ParenPad">
+      <property name="tokens" value="CTOR_CALL,METHOD_CALL,SUPER_CTOR_CALL"/>
+    </module>
+    <module name="TypecastParenPad"/>
+    <module name="WhitespaceAfter">
+      <property name="tokens" value="SEMI"/>
+    </module>
+    <module name="WhitespaceAround"/>
+    
+    <!-- Modifiers -->
+    <!-- http://checkstyle.sourceforge.net/config_modifier.html -->
+    <module name="ModifierOrder"/>
+    <module name="RedundantModifier"/>
+    
+    <!-- Block Checks -->
+    <!-- http://checkstyle.sourceforge.net/config_blocks.html -->
+    <module name="EmptyBlock">
+      <property name="option" value="text"/>
+    </module>
+    <module name="LeftCurly">
+      <property name="maxLineLength" value="120"/>
+    </module>
+    <module name="NeedBraces"/>
+    <module name="AvoidNestedBlocks"/>
+    
+    <!-- Class design -->
+    <!-- http://checkstyle.sourceforge.net/config_design.html -->
+    <module name="VisibilityModifier">
+      <property name="protectedAllowed" value="true"/>
+    </module>
+    <module name="FinalClass"/>
+    <module name="InterfaceIsType"/>
+    <module name="HideUtilityClassConstructor"/>
+    <module name="MutableException"/>
+    <module name="InnerTypeLast"/>
+    
+    <!-- Misc -->
+    <!-- http://checkstyle.sourceforge.net/config_misc.html -->
+    <module name="UncommentedMain"/>
+    <module name="UpperEll"/>
+    <module name="ArrayTypeStyle"/>
+    <module name="OuterTypeFilename"/>
+    
+    <!-- Common coding problems -->
+    <!-- http://checkstyle.sourceforge.net/config_coding.html -->
+    <module name="CovariantEquals"/>
+    <module name="EmptyStatement"/>
+    <module name="EqualsAvoidNull"/>
+    <module name="EqualsHashCode"/>
+    <module name="HiddenField">
+      <property name="ignoreSetter" value="true"/>
+      <property name="ignoreConstructorParameter" value="true"/>
+      <property name="ignoreAbstractMethods" value="true"/>
+    </module>
+    <module name="IllegalInstantiation"/>
+    <module name="InnerAssignment"/>
+    <module name="MissingSwitchDefault"/>
+    <module name="ModifiedControlVariable"/>
+    <module name="RedundantThrows">
+      <property name="allowUnchecked" value="true"/>
+      <property name="allowSubclasses" value="true"/>
+    </module>
+    <module name="SimplifyBooleanExpression"/>
+    <module name="SimplifyBooleanReturn"/>
+    <module name="StringLiteralEquality"/>
+    <module name="NoFinalizer"/>
+    <module name="SuperClone"/>
+    <module name="SuperFinalize"/>
+    <module name="IllegalCatch">
+      <property name="illegalClassNames" value="java.lang.Exception, java.lang.RuntimeException"/>
+    </module>
+    <module name="IllegalThrows"/>
+    <module name="PackageDeclaration"/>
+    <module name="JUnitTestCase"/>
+    <module name="IllegalType">
+      <property name="tokens" value="METHOD_DEF,PARAMETER_DEF"/>
+    </module>
+    <module name="DeclarationOrder">
+      <property name="severity" value="ignore"/>
+      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
+    </module>
+    <module name="ParameterAssignment"/>
+    <module name="ExplicitInitialization"/>
+    <module name="DefaultComesLast"/>
+    <module name="FallThrough"/>
+    <module name="MultipleVariableDeclarations"/>
+    <module name="OneStatementPerLine"/>
+    
+    <!-- Annotations -->
+    <!-- http://checkstyle.sourceforge.net/config_annotation.html -->
+    <module name="AnnotationUseStyle"/>
+    <module name="MissingDeprecated"/>
+    <module name="MissingOverride"/>
+
+    <!-- Validate and check for missing javadocs on public and protected elements -->
+    <!-- http://checkstyle.sourceforge.net/config_javadoc.html -->
     <module name="JavadocType">
       <property name="scope" value="protected"/>
     </module>
     <module name="JavadocMethod">
       <property name="scope" value="protected"/>
+      <property name="allowMissingPropertyJavadoc" value="true"/>
     </module>
     <module name="JavadocVariable">
       <property name="scope" value="protected"/>
@@ -20,119 +181,30 @@
       <property name="checkEmptyJavadoc" value="false"/>
     </module>
     
-    <module name="FileContentsHolder"/>
-    <module name="MemberName"/>
-    <module name="StaticVariableName"/>
-    <module name="MethodName"/>
-    <module name="ParameterName"/>
-    <module name="LocalVariableName"/>
-    <module name="ConstantName"/>
-    <module name="PackageName"/>
-    <module name="TypeName"/>
-    <module name="LocalFinalVariableName"/>
-    <module name="IllegalImport"/>
-    <module name="RedundantImport"/>
-    <module name="MethodLength">
-      <property name="max" value="300"/>
-    </module>
-    <module name="ParameterNumber">
-      <property name="max" value="12"/>
-    </module>
-    <module name="EmptyForIteratorPad"/>
-    <module name="NoWhitespaceAfter">
-      <property name="tokens" value="BNOT,DEC,DOT,INC,LNOT,UNARY_MINUS,UNARY_PLUS,TYPECAST"/>
-    </module>
-    <module name="NoWhitespaceBefore"/>
-    <module name="ParenPad">
-      <property name="tokens" value="CTOR_CALL,METHOD_CALL,SUPER_CTOR_CALL"/>
-    </module>
-    <module name="WhitespaceAfter">
-      <property name="tokens" value="SEMI"/>
-    </module>
-    <module name="WhitespaceAround"/>
-    <module name="ModifierOrder"/>
-    <module name="RedundantModifier"/>
-    <module name="LeftCurly">
-      <property name="maxLineLength" value="120"/>
-    </module>
-    <module name="AvoidNestedBlocks"/>
-    <module name="EmptyBlock">
-      <property name="option" value="text"/>
-    </module>
-    <module name="NeedBraces"/>
-    <module name="EmptyStatement"/>
-    <module name="EqualsHashCode"/>
-    <module name="HiddenField">
-      <property name="ignoreSetter" value="true"/>
-      <property name="ignoreConstructorParameter" value="true"/>
-      <property name="ignoreAbstractMethods" value="true"/>
-    </module>
-    <module name="IllegalInstantiation"/>
-    <module name="InnerAssignment"/>
-    <module name="RedundantThrows">
-      <property name="allowUnchecked" value="true"/>
-      <property name="allowSubclasses" value="true"/>
-    </module>
-    <module name="SimplifyBooleanExpression"/>
-    <module name="SimplifyBooleanReturn"/>
-    <module name="InterfaceIsType"/>
-    <module name="VisibilityModifier">
-      <property name="protectedAllowed" value="true"/>
-    </module>
-    <module name="ArrayTypeStyle"/>
-    <module name="UpperEll"/>
-    <module name="StringLiteralEquality"/>
-    <module name="SuperClone"/>
-    <module name="SuperFinalize"/>
-    <module name="CovariantEquals"/>
-    <module name="FallThrough"/>
-    <module name="IllegalThrows"/>
-    <module name="IllegalType">
-      <property name="tokens" value="METHOD_DEF,PARAMETER_DEF"/>
-    </module>
-    <module name="LineLength">
-      <property name="severity" value="info"/>
-      <property name="max" value="160"/>
-    </module>
-    <module name="LineLength">
-      <property name="max" value="220"/>
-      <property name="tabWidth" value="2"/>
-    </module>
-    <module name="DefaultComesLast"/>
-    <module name="DeclarationOrder">
-      <property name="severity" value="ignore"/>
-      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
-    </module>
-    <module name="ModifiedControlVariable"/>
-    <module name="PackageDeclaration"/>
-    <module name="AnnotationUseStyle"/>
-    <module name="EqualsAvoidNull"/>
-    <module name="NoFinalizer"/>
-    <module name="GenericWhitespace"/>
-    <module name="MethodTypeParameterName">
-      <property name="format" value="^[A-Z][a-zA-Z0-9]*$"/>
-    </module>
-    <module name="ClassTypeParameterName">
-      <property name="format" value="^[A-Z][a-zA-Z0-9]*$"/>
-    </module>
-    <module name="IllegalCatch">
-      <property name="illegalClassNames" value="java.lang.Exception, java.lang.RuntimeException"/>
-    </module>
-    <module name="OneStatementPerLine"/>
-    <module name="FinalClass"/>
-    <module name="HideUtilityClassConstructor"/>
-    <module name="MutableException"/>
-    <module name="UncommentedMain"/>
   </module>
 
+  <!-- Size Violations -->
+  <!-- http://checkstyle.sourceforge.net/config_sizes.html -->
   <module name="FileLength">
     <property name="max" value="4000"/>
   </module>
 
+  <!-- Whitespaces -->
+  <!-- http://checkstyle.sourceforge.net/config_whitespace.html -->
   <module name="FileTabCharacter"/>
 
+  <!-- Misc -->
+  <!-- http://checkstyle.sourceforge.net/config_misc.html -->
   <module name="Translation"/>
+  <module name="UniqueProperties"/>
+  <module name="RegexpSingleline">
+     <property name="format" value=".*[^\*]\s+$"/>
+     <property name="minimum" value="0"/>
+     <property name="maximum" value="0"/>
+     <property name="message" value="Line has trailing spaces."/>
+  </module>
 
+  <!-- Allow supproession of checkstyle warnings -->
   <module name="SuppressionCommentFilter"/>
 
 </module>
