@@ -82,14 +82,10 @@
     <module name="MethodLength">
       <property name="max" value="300"/>
     </module>
-    <module name="AnonInnerLength">
-      <property name="max" value="30"/>
-    </module>
     <module name="ParameterNumber">
-      <property name="max" value="10"/>
+      <property name="max" value="12"/>
     </module>
     <module name="OuterTypeNumber"/>
-    <module name="MethodCount"/>
     
     <!-- Whitespaces -->
     <!-- http://checkstyle.sourceforge.net/config_whitespace.html -->
