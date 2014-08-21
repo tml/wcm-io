@@ -21,7 +21,6 @@
     <module name="PackageName"/>
     <module name="TypeName"/>
     <module name="LocalFinalVariableName"/>
-<!--    <module name="AbstractClassName"/>-->
     <module name="ClassTypeParameterName">
       <!-- Generic types same rules as TypeName -->
       <property name="format" value="^[A-Z][a-zA-Z0-9]*$"/>
@@ -166,6 +165,8 @@
 
     <!-- Validate and check for missing javadocs on public and protected elements -->
     <!-- http://checkstyle.sourceforge.net/config_javadoc.html -->
+    <!-- *** only checked via eclipse, because CS does not support @SuppressWarnings("javadoc") statements *** -->
+    <!--
     <module name="JavadocType">
       <property name="scope" value="protected"/>
     </module>
@@ -180,6 +181,7 @@
       <property name="checkFirstSentence" value="false"/>
       <property name="checkEmptyJavadoc" value="false"/>
     </module>
+    -->
     
   </module>
 

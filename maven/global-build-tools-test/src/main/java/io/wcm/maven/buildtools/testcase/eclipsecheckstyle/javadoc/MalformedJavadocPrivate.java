@@ -21,7 +21,7 @@ package io.wcm.maven.buildtools.testcase.eclipsecheckstyle.javadoc;
 
 /**
  * Test for malformed javadoc comments.
- * Expected warnings: 9 eclipse
+ * Expected warnings: 10
  */
 class MalformedJavadocPrivate {
 
