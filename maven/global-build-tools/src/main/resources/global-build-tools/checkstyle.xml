@@ -232,4 +232,9 @@
   <!-- Allow supproession of checkstyle warnings -->
   <module name="SuppressionCommentFilter"/>
 
+  <!-- External suppressions file -->
+  <module name="SuppressionFilter">
+    <property name="file" value="${checkstyle.suppressions.file}"/>
+  </module>
+
 </module>
