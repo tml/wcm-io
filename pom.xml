@@ -41,10 +41,7 @@
   <modules>
     <module>parent_toplevel</module>
     <module>testing</module>
-    <!--
-    Exclude from main buid because of Apache Sling SNAPSHOT dependencies
     <module>sling</module>
-    -->
     <module>public_site</module>
   </modules>
 

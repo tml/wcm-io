@@ -70,6 +70,32 @@
           </snapshots>
         </repository>
 
+        <repository>
+          <id>wcm-io-apache-intermediate-release</id>
+          <url>http://wcm.io/maven/repositories/apache-intermediate-release</url>
+          <layout>default</layout>
+          <releases>
+            <enabled>true</enabled>
+            <updatePolicy>never</updatePolicy>
+          </releases>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </repository>
+
+        <repository>
+          <id>wcm-ioapache-snapshots</id>
+          <url>http://wcm.io/maven/repositories/apache-snapshots</url>
+          <layout>default</layout>
+          <releases>
+            <enabled>false</enabled>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+          </snapshots>
+        </repository>
+
       </repositories>
 
       <pluginRepositories>
@@ -103,6 +129,32 @@
         <pluginRepository>
           <id>oss-snapshots</id>
           <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+          <layout>default</layout>
+          <releases>
+            <enabled>false</enabled>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+          </snapshots>
+        </pluginRepository>
+
+        <pluginRepository>
+          <id>wcm-io-apache-intermediate-release</id>
+          <url>http://wcm.io/maven/repositories/apache-intermediate-release</url>
+          <layout>default</layout>
+          <releases>
+            <enabled>true</enabled>
+            <updatePolicy>never</updatePolicy>
+          </releases>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </pluginRepository>
+
+        <pluginRepository>
+          <id>wcm-ioapache-snapshots</id>
+          <url>http://wcm.io/maven/repositories/apache-snapshots</url>
           <layout>default</layout>
           <releases>
             <enabled>false</enabled>
