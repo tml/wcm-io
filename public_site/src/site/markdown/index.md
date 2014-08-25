@@ -10,6 +10,7 @@ wcm.io is a collection of independent modules which can be used standalone or in
 
 Overview of module categories:
 
+* [Sling](sling/)
 * [Testing](testing/)
 
 

@@ -121,13 +121,8 @@
       <item name="Imprint" href="http://wcm.io/imprint.html" />
     </menu>
     <menu name="Modules" inherit="top">
-      <item name="Testing" href="../testing/">
-        <item name="OSGi Mocks" href="../testing/osgi-mock/"/>
-        <item name="JCR Mocks" href="../testing/jcr-mock/"/>
-        <item name="Sling Mocks" href="../testing/sling-mock/"/>
-        <item name="AEM Mocks" href="../testing/aem-mock/"/>
-        <item name="JUnit Commons" href="../testing/junit-commons/"/>
-      </item>
+      <item name="Sling" href="../sling/"/>
+      <item name="Testing" href="../testing/"/>
     </menu>
     <menu name="Contribute" inherit="top">
       <item name="Contribute" href="http://wcm.io/contribute.html" />
