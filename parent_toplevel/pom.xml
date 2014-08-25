@@ -91,11 +91,8 @@
     <!-- site settings -->
     <site.url.module.prefix>parent_toplevel</site.url.module.prefix>
     <site.url>http://wcm.io</site.url>
-    <site.deploy.id>github-pages</site.deploy.id>
-    <site.deploy.url/>
-
-    <!-- github settings -->
-    <github.global.server>github</github.global.server>
+    <site.deploy.id>ssh-wcm.io</site.deploy.id>
+    <site.deploy.url>scp://wcm.io/var/www/wcm.io/www/</site.deploy.url>
 
   </properties>
 
@@ -187,33 +184,7 @@
           <generateReports>true</generateReports>
           <inputEncoding>UTF-8</inputEncoding>
           <outputEncoding>UTF-8</outputEncoding>
-          <!-- Site deployment done using GitHub site plugin -->
-          <skipDeploy>true</skipDeploy>
         </configuration>
-      </plugin>
-
-      <!-- GitHub site plug-in for deployment to GitHub pages -->
-      <plugin>
-        <groupId>com.github.github</groupId>
-        <artifactId>site-maven-plugin</artifactId>
-        <configuration>
-          <branch>refs/heads/master</branch>
-          <message>Creating site for ${project.artifactId}, ${project.version}</message>
-          <path>${project.distributionManagement.site.url}</path>
-          <merge>true</merge>
-          <noJekyll>true</noJekyll>
-          <repositoryOwner>wcm-io</repositoryOwner>
-          <repositoryName>wcm-io.github.io</repositoryName>
-        </configuration>
-        <executions>
-          <execution>
-            <id>github-site</id>
-            <goals>
-              <goal>site</goal>
-            </goals>
-            <phase>site-deploy</phase>
-          </execution>
-        </executions>
       </plugin>
 
     </plugins>
