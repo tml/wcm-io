@@ -60,21 +60,12 @@
         </configuration>
       </plugin>
 
+      <!-- do not generate site for this project -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-site-plugin</artifactId>
         <configuration>
-          <!-- Site deployment done using GitHub site plugin -->
           <skipDeploy>true</skipDeploy>
-        </configuration>
-      </plugin>
-
-      <!-- do not generate site for this hierarchy pom -->
-      <plugin>
-        <groupId>com.github.github</groupId>
-        <artifactId>site-maven-plugin</artifactId>
-        <configuration>
-          <skip>true</skip>
         </configuration>
       </plugin>
 

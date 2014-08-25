@@ -58,15 +58,6 @@
         </configuration>
       </plugin>
 
-      <!-- GitHub site plug-in for deployment to GitHub pages -->
-      <plugin>
-        <groupId>com.github.github</groupId>
-        <artifactId>site-maven-plugin</artifactId>
-        <configuration>
-          <path></path>
-        </configuration>
-      </plugin>
-
     </plugins>
   </build>
 
