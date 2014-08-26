@@ -5,6 +5,9 @@
   <!-- Required in unit tests e.g. for public JUnit rule variables -->
   <suppress checks="VisibilityModifier" files=".*[\\/]src[\\/]test[\\/]"/>
   
+  <!-- Do not check line lengths for unit tests -->
+  <suppress checks="LineLength" files=".*[\\/]src[\\/]test[\\/]"/>
+  
   <!-- Do not check javadocs in unit tests -->
   <suppress checks="Javadoc" files=".*[\\/]src[\\/]test[\\/]"/>
 
