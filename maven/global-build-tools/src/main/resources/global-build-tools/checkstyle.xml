@@ -189,23 +189,21 @@
 
     <!-- Validate and check for missing javadocs on public and protected elements -->
     <!-- http://checkstyle.sourceforge.net/config_javadoc.html -->
-    <!-- *** only checked via eclipse, because CS does not support @SuppressWarnings("javadoc") statements *** -->
-    <!--
     <module name="JavadocType">
-      <property name="scope" value="protected"/>
+      <property name="scope" value="public"/>
+      <property name="allowMissingParamTags" value="true"/>
     </module>
     <module name="JavadocMethod">
-      <property name="scope" value="protected"/>
+      <property name="scope" value="public"/>
       <property name="allowMissingPropertyJavadoc" value="true"/>
+      <property name="allowMissingThrowsTags" value="true"/>
+      <property name="allowUndeclaredRTE" value="true"/>
+      <property name="allowMissingParamTags" value="true"/>
+      <property name="allowMissingReturnTag" value="true"/>
     </module>
     <module name="JavadocVariable">
-      <property name="scope" value="protected"/>
+      <property name="scope" value="public"/>
     </module>
-    <module name="JavadocStyle">
-      <property name="checkFirstSentence" value="false"/>
-      <property name="checkEmptyJavadoc" value="false"/>
-    </module>
-    -->
     
   </module>
 

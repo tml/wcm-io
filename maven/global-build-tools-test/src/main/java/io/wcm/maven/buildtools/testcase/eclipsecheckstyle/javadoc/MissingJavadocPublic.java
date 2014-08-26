@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,7 +21,7 @@ package io.wcm.maven.buildtools.testcase.eclipsecheckstyle.javadoc;
 
 /*
  * Test for missing javadoc comments.
- * Expected warnings: 8 (javadoc) + 2 others
+ * Expected warnings: 6 (javadoc) + 2 others
  */
 // 1 warning
 public class MissingJavadocPublic<T> implements Comparable<T> {
@@ -49,14 +49,14 @@ public class MissingJavadocPublic<T> implements Comparable<T> {
    * Missing method parameter javadoc
    */
   public void methodParameter(int param) {
-    // 1 warning
+    // no warning
   }
 
   /**
    * Missing return javadoc
    */
   public int returnValue() {
-    // 1 warning
+    // no warning
     return 0;
   }
 
