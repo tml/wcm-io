@@ -42,6 +42,7 @@
     <module>parent_toplevel</module>
     <module>testing</module>
     <module>sling</module>
+    <module>config</module>
     <module>public_site</module>
   </modules>
 
