@@ -2,7 +2,7 @@
 
 wcm.io is an Open Source project which provides libraries and extensions for AEM-based applications.
 
-AEM ([Adobe Experience Manager][aem-website], formerly called CQ) is an entprise-grade web content management platform.
+AEM ([Adobe Experience Manager][aem-website], formerly called CQ) is an enterprise-grade web content management platform.
 
 ### Modules
 
