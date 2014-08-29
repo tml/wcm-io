@@ -20,7 +20,7 @@ When creating a new issue, try following [necolas's guidelines][issue-guidelines
 
 ### Fork, patch and contribute code
 
-Feel free to fork Reflow skin's [Git repository at GitHub][wcm-io-github] for your own use and
+Feel free to fork wcm.io's [Git repository at GitHub][wcm-io-github] for your own use and
 updates.
 
 Contribute your fixes and new features back to the main codebase using
