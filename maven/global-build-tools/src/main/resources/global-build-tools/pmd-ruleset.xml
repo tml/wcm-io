@@ -79,6 +79,7 @@
     <exclude name="NullAssignment"/>
     <exclude name="AvoidUsingShortType"/>
     <exclude name="BooleanInversion"/>
+    <exclude name="AvoidPrefixingMethodParameters"/>
   </rule>
   <rule ref="rulesets/java/design.xml">
     <exclude name="AbstractClassWithoutAnyMethod"/>              <!-- abstract -> non-instantable, not protected ctor        -->
@@ -124,9 +125,13 @@
     -->
     <exclude name="BeanMembersShouldSerialize"/>
   </rule>
-  <rule ref="rulesets/java/logging-java.xml"/>
+  <rule ref="rulesets/java/logging-java.xml">
+    <exclude name="LoggerIsNotStaticFinal"/>
+  </rule>
   <rule ref="rulesets/java/migrating.xml">
     <exclude name="JUnit4TestShouldUseTestAnnotation"/>
+    <exclude name="JUnit4TestShouldUseBeforeAnnotation"/>
+    <exclude name="JUnit4TestShouldUseAfterAnnotation"/>
   </rule>
   <!-- avoid duplication with checkstlye
   <rule ref="rulesets/java/naming.xml"/>
@@ -135,6 +140,8 @@
     <exclude name="MethodArgumentCouldBeFinal"/>
     <exclude name="LocalVariableCouldBeFinal"/>
     <exclude name="AvoidInstantiatingObjectsInLoops"/>
+    <exclude name="PrematureDeclaration"/>
+    <exclude name="SimplifyStartsWith"/>
   </rule>
   <rule ref="rulesets/java/strictexception.xml">
     <exclude name="AvoidCatchingThrowable"/>  <!-- makes sense but is used alot currently -->
