@@ -73,6 +73,18 @@
   </dependencyManagement>
 
   <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>false</filtering>
+      </resource>
+      <!-- copy webapp resources to SLING-INF/app-root -->
+      <resource>
+        <directory>src/main/webapp</directory>
+        <targetPath>SLING-INF</targetPath>
+        <filtering>false</filtering>
+      </resource>
+    </resources>
     <plugins>
 
       <!-- release plugin (only for this pom) -->
