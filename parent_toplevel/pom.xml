@@ -212,6 +212,9 @@
             <licenseName>apache_v2</licenseName>
             <addJavaLicenseAfterPackage>false</addJavaLicenseAfterPackage>
             <projectName>wcm.io</projectName>
+            <excludes>
+              <exclude>**/*.json</exclude>
+            </excludes>
           </configuration>
         </plugin>
       </plugins>
