@@ -51,12 +51,12 @@
     <name>wcm.io</name>
     <url>http://wcm.io</url>
   </organization>
-  
+
   <issueManagement>
     <system>GitHub</system>
     <url>https://github.com/wcm-io/wcm-io/issues</url>
   </issueManagement>
-  
+
   <ciManagement>
     <system>Travis CI</system>
     <url>https://travis-ci.org/wcm-io/wcm-io</url>

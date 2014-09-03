@@ -26,7 +26,7 @@
   <module name="TreeWalker">
     <property name="tabWidth" value="2"/>
     <module name="FileContentsHolder"/>
-    
+
     <!-- Naming conventions -->
     <!-- http://checkstyle.sourceforge.net/config_naming.html -->
     <module name="AbstractClassName">
@@ -65,12 +65,12 @@
       <!-- Generic types same rules as TypeName -->
       <property name="format" value="^[A-Z][a-zA-Z0-9]*$"/>
     </module>
-    
+
     <!-- Imports -->
     <!-- http://checkstyle.sourceforge.net/config_imports.html -->
     <module name="IllegalImport"/>
     <module name="RedundantImport"/>
-    
+
     <!-- Size Violations -->
     <!-- http://checkstyle.sourceforge.net/config_sizes.html -->
     <module name="LineLength">
@@ -84,7 +84,7 @@
       <property name="max" value="12"/>
     </module>
     <module name="OuterTypeNumber"/>
-    
+
     <!-- Whitespaces -->
     <!-- http://checkstyle.sourceforge.net/config_whitespace.html -->
     <module name="GenericWhitespace"/>
@@ -101,12 +101,12 @@
       <property name="tokens" value="SEMI"/>
     </module>
     <module name="WhitespaceAround"/>
-    
+
     <!-- Modifiers -->
     <!-- http://checkstyle.sourceforge.net/config_modifier.html -->
     <module name="ModifierOrder"/>
     <module name="RedundantModifier"/>
-    
+
     <!-- Block Checks -->
     <!-- http://checkstyle.sourceforge.net/config_blocks.html -->
     <module name="EmptyBlock">
@@ -117,7 +117,7 @@
     </module>
     <module name="NeedBraces"/>
     <module name="AvoidNestedBlocks"/>
-    
+
     <!-- Class design -->
     <!-- http://checkstyle.sourceforge.net/config_design.html -->
     <module name="VisibilityModifier">
@@ -127,14 +127,14 @@
     <module name="InterfaceIsType"/>
     <module name="HideUtilityClassConstructor"/>
     <module name="MutableException"/>
-    
+
     <!-- Misc -->
     <!-- http://checkstyle.sourceforge.net/config_misc.html -->
     <module name="UncommentedMain"/>
     <module name="UpperEll"/>
     <module name="ArrayTypeStyle"/>
     <module name="OuterTypeFilename"/>
-    
+
     <!-- Common coding problems -->
     <!-- http://checkstyle.sourceforge.net/config_coding.html -->
     <module name="CovariantEquals"/>
@@ -175,7 +175,7 @@
     <module name="FallThrough"/>
     <module name="MultipleVariableDeclarations"/>
     <module name="OneStatementPerLine"/>
-    
+
     <!-- Annotations -->
     <!-- http://checkstyle.sourceforge.net/config_annotation.html -->
     <module name="AnnotationUseStyle"/>
@@ -199,7 +199,7 @@
     <module name="JavadocVariable">
       <property name="scope" value="public"/>
     </module>
-    
+
   </module>
 
   <!-- Size Violations -->
