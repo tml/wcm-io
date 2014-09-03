@@ -30,16 +30,19 @@
   </parent>
 
   <groupId>io.wcm</groupId>
-  <artifactId>io.wcm.testing.sling-mock-resolvertype</artifactId>
+  <artifactId>io.wcm.wcm</artifactId>
   <version>1</version>
   <packaging>pom</packaging>
 
-  <name>Sling Mocks Resource Types Root</name>
-  <description>Implementation for different resource types supported by the resource resolving mock implementation.</description>
+  <name>WCM Root</name>
+  <description>AEM WCM Extensions.</description>
 
   <modules>
-    <module>jackrabbit</module>
-    <module>resourceresolver-mock</module>
+    <module>parent</module>
+    <module>commons</module>
+    <module>ui/granite</module>
+    <module>ui/extjs</module>
+    <module>parsys</module>
   </modules>
 
   <build>
