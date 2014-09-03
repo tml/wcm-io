@@ -24,18 +24,18 @@
 
   <parent>
     <groupId>io.wcm</groupId>
-    <artifactId>io.wcm.config.parent</artifactId>
+    <artifactId>io.wcm.sling.parent</artifactId>
     <version>0.1.0-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
 
   <groupId>io.wcm</groupId>
-  <artifactId>io.wcm.config.api</artifactId>
+  <artifactId>io.wcm.sling.commons</artifactId>
   <version>0.1.0-SNAPSHOT</version>
   <packaging>bundle</packaging>
 
-  <name>Configuration API</name>
-  <description>API for configuration infrastructure.</description>
+  <name>Sling Commons</name>
+  <description>Common Sling utility and helper funtions.</description>
 
   <scm>
     <connection>scm:git:git@github.com:wcm-io/wcm-io.git</connection>
@@ -45,21 +45,60 @@
   </scm>
 
   <properties>
-    <site.url.module.prefix>config/api</site.url.module.prefix>
+    <site.url.module.prefix>sling/commons</site.url.module.prefix>
   </properties>
 
   <dependencies>
 
     <dependency>
-      <groupId>io.wcm</groupId>
-      <artifactId>io.wcm.sling.commons</artifactId>
-      <version>0.1.0-SNAPSHOT</version>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.adobe.aem</groupId>
+      <artifactId>aem-api</artifactId>
+      <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.apache.felix.scr.annotations</artifactId>
+      <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>org.osgi.core</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>org.osgi.compendium</artifactId>
+      <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.mortbay.jetty</groupId>
+      <artifactId>servlet-api</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet.jsp</groupId>
+      <artifactId>jsp-api</artifactId>
       <scope>compile</scope>
     </dependency>
 
     <dependency>
       <groupId>io.wcm</groupId>
-      <artifactId>io.wcm.testing.aem-mock</artifactId>
+      <artifactId>io.wcm.testing.logging-mock</artifactId>
       <version>0.1.0-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
@@ -90,9 +129,7 @@
         <configuration>
           <instructions>
             <Export-Package>
-              io.wcm.config.api;version=${project.version},
-              io.wcm.config.api.management;version=${project.version},
-              io.wcm.config.spi;version=${project.version}
+              io.wcm.sling.models.annotations;version=${project.version}
             </Export-Package>
           </instructions>
         </configuration>

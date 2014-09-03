@@ -17,18 +17,18 @@
  * limitations under the License.
  * #L%
  */
-package io.wcm.config.core.util;
+package io.wcm.sling.commons.osgi;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
 import java.util.Map;
 
-import org.apache.commons.collections4.IteratorUtils;
 import org.junit.Test;
 import org.osgi.framework.Constants;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Iterators;
 
 public class RankedServicesTest {
 
@@ -50,20 +50,20 @@ public class RankedServicesTest {
 
     underTest.bind(SERVICE_1, SERVICE_1_PROPS);
     assertEquals(1, underTest.get().size());
-    Comparable[] services = IteratorUtils.toArray(underTest.get().iterator(), Comparable.class);
+    Comparable[] services = Iterators.toArray(underTest.get().iterator(), Comparable.class);
     assertSame(SERVICE_1, services[0]);
 
     underTest.bind(SERVICE_2, SERVICE_2_PROPS);
     underTest.bind(SERVICE_3, SERVICE_3_PROPS);
     assertEquals(3, underTest.get().size());
-    services = IteratorUtils.toArray(underTest.get().iterator(), Comparable.class);
+    services = Iterators.toArray(underTest.get().iterator(), Comparable.class);
     assertSame(SERVICE_2, services[0]);
     assertSame(SERVICE_1, services[1]);
     assertSame(SERVICE_3, services[2]);
 
     underTest.unbind(SERVICE_2, SERVICE_2_PROPS);
     assertEquals(2, underTest.get().size());
-    services = IteratorUtils.toArray(underTest.get().iterator(), Comparable.class);
+    services = Iterators.toArray(underTest.get().iterator(), Comparable.class);
     assertSame(SERVICE_1, services[0]);
     assertSame(SERVICE_3, services[1]);
 

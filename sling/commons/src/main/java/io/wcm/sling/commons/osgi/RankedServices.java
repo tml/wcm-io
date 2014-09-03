@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package io.wcm.config.core.util;
+package io.wcm.sling.commons.osgi;
 
 import java.util.ArrayList;
 import java.util.Collection;
