@@ -24,18 +24,18 @@
 
   <parent>
     <groupId>io.wcm</groupId>
-    <artifactId>io.wcm.config.parent</artifactId>
+    <artifactId>io.wcm.samples.parent</artifactId>
     <version>0.1.0-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
 
   <groupId>io.wcm</groupId>
-  <artifactId>io.wcm.config.editor</artifactId>
+  <artifactId>io.wcm.samples.config-sample-app</artifactId>
   <version>0.1.0-SNAPSHOT</version>
   <packaging>bundle</packaging>
 
-  <name>Configuration Editor GUI</name>
-  <description>Editor GUI for configuration infrastructure.</description>
+  <name>Configuration Sample Application</name>
+  <description>Sample application to demonstrate configuration API and configuration editor GUI.</description>
 
   <scm>
     <connection>scm:git:git@github.com:wcm-io/wcm-io.git</connection>
@@ -45,7 +45,7 @@
   </scm>
 
   <properties>
-    <site.url.module.prefix>config/editor</site.url.module.prefix>
+    <site.url.module.prefix>samples/config-sample-app</site.url.module.prefix>
   </properties>
 
   <dependencies>
@@ -56,17 +56,23 @@
       <version>0.1.0-SNAPSHOT</version>
       <scope>compile</scope>
     </dependency>
-
     <dependency>
       <groupId>io.wcm</groupId>
-      <artifactId>io.wcm.testing.aem-mock</artifactId>
+      <artifactId>io.wcm.config.core</artifactId>
       <version>0.1.0-SNAPSHOT</version>
-      <scope>test</scope>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.wcm</groupId>
+      <artifactId>io.wcm.config.editor</artifactId>
+      <version>0.1.0-SNAPSHOT</version>
+      <scope>compile</scope>
     </dependency>
 
   </dependencies>
 
   <build>
+
     <plugins>
 
       <plugin>
@@ -89,16 +95,11 @@
         <configuration>
           <instructions>
             <Sling-Initial-Content>
-              SLING-INF/app-root;overwrite:=true;ignoreImportProviders:=xml;path:=/apps/wcm-io/config/editor
+              SLING-INF/app-root;overwrite:=true;ignoreImportProviders:=xml;path:=/apps/wcm-io/samples/config-sample-app
             </Sling-Initial-Content>
             <Export-Package>
-              io.wcm.config.editor.*;version=${project.version}
+              io.wcm.samples.configsampleapp;version=${project.version}
             </Export-Package>
-            <!--
-            <Sling-Model-Packages>
-              io.wcm.config.editor
-            </Sling-Model-Packages>
-            -->
           </instructions>
         </configuration>
       </plugin>

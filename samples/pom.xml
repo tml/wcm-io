@@ -30,17 +30,16 @@
   </parent>
 
   <groupId>io.wcm</groupId>
-  <artifactId>io.wcm.sling</artifactId>
+  <artifactId>io.wcm.samples</artifactId>
   <version>1</version>
   <packaging>pom</packaging>
 
-  <name>Sling Extensions Root</name>
-  <description>Sling extensions.</description>
+  <name>Samples Root</name>
+  <description>Sample projects and applications to demonstrate and test wcm.io features.</description>
 
   <modules>
     <module>parent</module>
-    <module>commons</module>
-    <module>models</module>
+    <module>config-sample-app</module>
   </modules>
 
   <build>
