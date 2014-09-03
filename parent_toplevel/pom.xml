@@ -214,6 +214,7 @@
             <projectName>wcm.io</projectName>
             <excludes>
               <exclude>**/*.json</exclude>
+              <exclude>**/*.html</exclude>
             </excludes>
           </configuration>
         </plugin>
