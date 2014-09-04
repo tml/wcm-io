@@ -115,6 +115,18 @@
   <dependencyManagement>
     <dependencies>
 
+      <!-- Depend on newer Sling artifact versions than included in AEM API -->
+      <dependency>
+        <groupId>org.apache.sling</groupId>
+        <artifactId>org.apache.sling.models.api</artifactId>
+        <version>1.0.3-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.sling</groupId>
+        <artifactId>org.apache.sling.models.impl</artifactId>
+        <version>1.0.7-SNAPSHOT</version>
+      </dependency>
+
       <!-- Import CQ dependencies -->
       <dependency>
         <groupId>io.wcm.maven</groupId>
