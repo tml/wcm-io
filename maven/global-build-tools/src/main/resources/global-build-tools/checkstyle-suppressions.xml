@@ -11,4 +11,7 @@
   <!-- Do not check javadocs in unit tests -->
   <suppress checks="Javadoc" files=".*[\\/]src[\\/]test[\\/]"/>
 
+  <!-- Do not check JUnit outside unit tests -->
+  <suppress checks="JUnitTestCase" files=".*[\\/]src[\\/]main[\\/]"/>
+
 </suppressions>
