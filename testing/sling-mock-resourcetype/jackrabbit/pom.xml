@@ -31,7 +31,7 @@
 
   <groupId>io.wcm</groupId>
   <artifactId>io.wcm.testing.sling-mock-resolvertype.jackrabbit</artifactId>
-  <version>0.1.0-SNAPSHOT</version>
+  <version>1.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>Sling Mocks Jackrabbit Resource Resolver Type</name>
@@ -55,14 +55,14 @@
     <dependency>
       <groupId>io.wcm</groupId>
       <artifactId>io.wcm.testing.sling-mock</artifactId>
-      <version>0.1.0-SNAPSHOT</version>
+      <version>1.0.0</version>
       <scope>compile</scope>
     </dependency>
 
     <dependency>
       <groupId>io.wcm</groupId>
       <artifactId>io.wcm.testing.sling-mock</artifactId>
-      <version>0.1.0-SNAPSHOT</version>
+      <version>1.0.0</version>
       <classifier>tests</classifier>
       <scope>test</scope>
     </dependency>
