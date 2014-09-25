@@ -64,24 +64,9 @@
 
   <developers>
     <developer>
-      <name>Alexander Muthmann</name>
-      <organization>pro!vision GmbH</organization>
-      <organizationUrl>https://www.pro-vision.de</organizationUrl>
-    </developer>
-    <developer>
-      <name>Igor Sechyn</name>
-      <organization>pro!vision GmbH</organization>
-      <organizationUrl>https://www.pro-vision.de</organizationUrl>
-    </developer>
-    <developer>
-      <name>Peter Mannel-Wiedemann</name>
-      <organization>pro!vision GmbH</organization>
-      <organizationUrl>https://www.pro-vision.de</organizationUrl>
-    </developer>
-    <developer>
-      <name>Stefan Seifert</name>
-      <organization>pro!vision GmbH</organization>
-      <organizationUrl>https://www.pro-vision.de</organizationUrl>
+      <name>wcm.io Community</name>
+      <organization>wcm.io</organization>
+      <organizationUrl>http://wcm.io</organizationUrl>
     </developer>
   </developers>
 
