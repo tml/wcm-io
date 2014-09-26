@@ -33,25 +33,44 @@ wcm.io depends on the Adobe Public Maven Repository:
   </repository>
 </repositories>
 
-<pluginRepositories>
-  <pluginRepository>
-    <id>adobe-public-releases</id>
-    <name>Adobe Public Repository</name>
-    <url>http://repo.adobe.com/nexus/content/groups/public</url>
-    <releases>
-      <enabled>true</enabled>
-      <updatePolicy>never</updatePolicy>
-    </releases>
-    <snapshots>
-      <enabled>false</enabled>
-    </snapshots>
-  </pluginRepository>
-</pluginRepositories>
+<pluginRepository>
+  <id>adobe-public-releases</id>
+  <name>Adobe Public Repository</name>
+  <url>http://repo.adobe.com/nexus/content/groups/public</url>
+  <releases>
+    <enabled>true</enabled>
+    <updatePolicy>never</updatePolicy>
+  </releases>
+  <snapshots>
+    <enabled>false</enabled>
+  </snapshots>
+</pluginRepository>
 ```
 
-### Apache Snapshot/Intermediate Release Repositories
 
-These two repositories are hosted on wcm.io and provide snapshots from the Apache SCM trunk which are not released currently. They are replaced with the official versions as soon as they are released by the Apache project.
+### Apache Snapshot Repository
+
+Sometimes snapshot are referenced from the Apache Snapshot repository:
+
+```xml
+<repository>
+  <id>apache-snapshots</id>
+  <url>http://repository.apache.org/snapshots</url>
+  <layout>default</layout>
+  <releases>
+    <enabled>false</enabled>
+  </releases>
+  <snapshots>
+    <enabled>true</enabled>
+    <updatePolicy>always</updatePolicy>
+  </snapshots>
+</repository>
+```
+
+
+### wcm.io Intermediate Release Repository
+
+This repository is hosted on wcm.io and provides intermediate releses with revision number from snapshots from the Apache SCM trunk which are not officially released currently. They are replaced with the official versions as soon as they are released by the Apache project.
 
 ```xml
 <repository>
@@ -67,16 +86,16 @@ These two repositories are hosted on wcm.io and provide snapshots from the Apach
   </snapshots>
 </repository>
 
-<repository>
-  <id>wcm-ioapache-snapshots</id>
-  <url>http://wcm.io/maven/repositories/apache-snapshots</url>
-  <layout>default</layout>
+<pluginRepository>
+  <id>wcm-io-apache-intermediate-release</id>
+  <url>http://wcm.io/maven/repositories/apache-intermediate-release</url>
   <releases>
-    <enabled>false</enabled>
+    <enabled>true</enabled>
+    <updatePolicy>never</updatePolicy>
   </releases>
   <snapshots>
-    <enabled>true</enabled>
-    <updatePolicy>always</updatePolicy>
+    <enabled>false</enabled>
   </snapshots>
-</repository>
+</pluginRepository>
+
 ```

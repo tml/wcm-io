@@ -44,6 +44,7 @@
     <module>sling</module>
     <module>config</module>
     <module>wcm</module>
+    <module>handler</module>
     <module>samples</module>
     <module>public_site</module>
   </modules>
