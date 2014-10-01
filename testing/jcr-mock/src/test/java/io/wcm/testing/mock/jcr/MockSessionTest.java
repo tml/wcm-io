@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -39,14 +39,15 @@ import org.apache.jackrabbit.JcrConstants;
 import org.junit.Before;
 import org.junit.Test;
 
-@SuppressWarnings("javadoc")
+import com.google.common.collect.ImmutableSet;
+
 public class MockSessionTest {
 
   private Session session;
 
   @Before
   public void setUp() {
-    this.session = MockJcrFactory.newSession();
+    this.session = MockJcr.newSession();
   }
 
   @Test
@@ -182,30 +183,22 @@ public class MockSessionTest {
     // add dummy namespace
     this.session.setNamespacePrefix("dummy", "http://mydummy");
 
-    assertArrayEquals(new String[] {
-        "jcr", "dummy"
-    }, this.session.getNamespacePrefixes());
+    assertEquals(ImmutableSet.of("jcr", "dummy"), ImmutableSet.copyOf(this.session.getNamespacePrefixes()));
     assertEquals("http://mydummy", this.session.getNamespaceURI("dummy"));
     assertEquals("dummy", this.session.getNamespacePrefix("http://mydummy"));
 
     // test via namespace registry
     NamespaceRegistry namespaceRegistry = this.session.getWorkspace().getNamespaceRegistry();
 
-    assertArrayEquals(new String[] {
-        "jcr", "dummy"
-    }, namespaceRegistry.getPrefixes());
-    assertArrayEquals(new String[] {
-        "http://www.jcp.org/jcr/1.0", "http://mydummy"
-    }, namespaceRegistry.getURIs());
+    assertEquals(ImmutableSet.of("jcr", "dummy"), ImmutableSet.copyOf(namespaceRegistry.getPrefixes()));
+    assertEquals(ImmutableSet.of("http://www.jcp.org/jcr/1.0", "http://mydummy"), ImmutableSet.copyOf(namespaceRegistry.getURIs()));
     assertEquals("http://mydummy", namespaceRegistry.getURI("dummy"));
     assertEquals("dummy", namespaceRegistry.getPrefix("http://mydummy"));
 
     // remove dummy namespace
     namespaceRegistry.unregisterNamespace("dummy");
 
-    assertArrayEquals(new String[] {
-        "jcr"
-    }, this.session.getNamespacePrefixes());
+    assertEquals(ImmutableSet.of("jcr"), ImmutableSet.copyOf(this.session.getNamespacePrefixes()));
     assertEquals("http://www.jcp.org/jcr/1.0", this.session.getNamespaceURI("jcr"));
     assertEquals("jcr", this.session.getNamespacePrefix("http://www.jcp.org/jcr/1.0"));
   }

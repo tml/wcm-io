@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -27,12 +27,12 @@ import java.util.UUID;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.collections4.IteratorUtils;
+import org.apache.commons.collections.IteratorUtils;
 
 /**
  * Mock {@link HttpSession} implementation.
  */
-public class MockHttpSession implements HttpSession {
+public final class MockHttpSession implements HttpSession {
 
   private final ServletContext servletContext = new MockServletContext();
   private final Map<String, Object> attributeMap = new HashMap<String, Object>();
@@ -49,6 +49,7 @@ public class MockHttpSession implements HttpSession {
     return this.attributeMap.get(name);
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public Enumeration<String> getAttributeNames() {
     return IteratorUtils.asEnumeration(this.attributeMap.keySet().iterator());

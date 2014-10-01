@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -22,9 +22,7 @@ package io.wcm.testing.mock.sling.resource;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import io.wcm.testing.junit.rules.parameterized.Generator;
-import io.wcm.testing.junit.rules.parameterized.GeneratorFactory;
-import io.wcm.testing.mock.sling.MockSlingFactory;
+import io.wcm.testing.mock.sling.MockSling;
 import io.wcm.testing.mock.sling.ResourceResolverType;
 
 import java.io.ByteArrayInputStream;
@@ -36,37 +34,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.jcr.RepositoryException;
-import javax.jcr.Session;
-
-import org.apache.commons.collections4.IteratorUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.sling.api.resource.PersistenceException;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ValueMap;
-import org.apache.sling.commons.testing.jcr.RepositoryUtil;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
+
+import com.day.cq.commons.jcr.JcrConstants;
+import com.google.common.collect.ImmutableList;
 
 /**
  * Implements simple write and read resource and values test.
  * Sling CRUD API is used to create the test data.
  */
-@SuppressWarnings("javadoc")
 public class SlingCrudResourceResolverTest {
-
-  //CHECKSTYLE:OFF
-  // Run all unit tests for each resource resolver typ listed here
-  @Rule
-  public final Generator<ResourceResolverType> resourceResolverType = GeneratorFactory.list(
-      ResourceResolverType.JCR_MOCK,
-      ResourceResolverType.JCR_JACKRABBIT,
-      ResourceResolverType.RESOURCERESOLVER_MOCK
-      );
-  //CHECKSTYLE:ON
 
   private static final String STRING_VALUE = "value1";
   private static final String[] STRING_ARRAY_VALUE = new String[] {
@@ -85,19 +69,23 @@ public class SlingCrudResourceResolverTest {
   protected Resource testRoot;
   private static volatile long rootNodeCounter;
 
-  @Before
-  public void setUp() throws RepositoryException, IOException {
-    this.resourceResolver = MockSlingFactory.newResourceResolver(this.resourceResolverType.value());
+  protected ResourceResolverType getResourceResolverType() {
+    return ResourceResolverType.JCR_MOCK;
+  }
 
-    if (this.resourceResolverType.value() == ResourceResolverType.JCR_JACKRABBIT) {
-      Session session = this.resourceResolver.adaptTo(Session.class);
-      RepositoryUtil.registerSlingNodeTypes(session);
-    }
+  protected ResourceResolver newResourceResolver() {
+    return MockSling.newResourceResolver(getResourceResolverType());
+  }
+
+  @Before
+  public final void setUp() throws IOException {
+    this.resourceResolver = newResourceResolver();
 
     // prepare some test data using Sling CRUD API
     Resource rootNode = getTestRootResource();
 
     Map<String, Object> props = new HashMap<>();
+    props.put(JcrConstants.JCR_PRIMARYTYPE, JcrConstants.NT_UNSTRUCTURED);
     props.put("stringProp", STRING_VALUE);
     props.put("stringArrayProp", STRING_ARRAY_VALUE);
     props.put("integerProp", INTEGER_VALUE);
@@ -115,7 +103,7 @@ public class SlingCrudResourceResolverTest {
   }
 
   @After
-  public void tearDown() {
+  public final void tearDown() {
     this.testRoot = null;
   }
 
@@ -125,20 +113,22 @@ public class SlingCrudResourceResolverTest {
    */
   private Resource getTestRootResource() throws PersistenceException {
     if (this.testRoot == null) {
+      Map<String, Object> props = new HashMap<>();
+      props.put(JcrConstants.JCR_PRIMARYTYPE, JcrConstants.NT_UNSTRUCTURED);
       final Resource root = this.resourceResolver.getResource("/");
-      if (this.resourceResolverType.value() == ResourceResolverType.JCR_JACKRABBIT) {
-        final Resource classRoot = this.resourceResolver.create(root, getClass().getSimpleName(), ValueMap.EMPTY);
-        this.testRoot = this.resourceResolver.create(classRoot, System.currentTimeMillis() + "_" + (rootNodeCounter++), ValueMap.EMPTY);
+      if (getResourceResolverType() == ResourceResolverType.JCR_JACKRABBIT) {
+        final Resource classRoot = this.resourceResolver.create(root, getClass().getSimpleName(), props);
+        this.testRoot = this.resourceResolver.create(classRoot, System.currentTimeMillis() + "_" + (rootNodeCounter++), props);
       }
       else {
-        this.testRoot = this.resourceResolver.create(root, "test", ValueMap.EMPTY);
+        this.testRoot = this.resourceResolver.create(root, "test", props);
       }
     }
     return this.testRoot;
   }
 
   @Test
-  public void testGetResourcesAndValues() throws IOException {
+  public void testSimpleProperties() throws IOException {
     Resource resource1 = this.resourceResolver.getResource(getTestRootResource().getPath() + "/node1");
     assertNotNull(resource1);
     assertEquals("node1", resource1.getName());
@@ -149,32 +139,81 @@ public class SlingCrudResourceResolverTest {
     assertEquals((Integer)INTEGER_VALUE, props.get("integerProp", Integer.class));
     assertEquals(DOUBLE_VALUE, props.get("doubleProp", Double.class), 0.0001);
     assertEquals(BOOLEAN_VALUE, props.get("booleanProp", Boolean.class));
+  }
+
+  @Test
+  public void testDateProperty() throws IOException {
+    Resource resource1 = this.resourceResolver.getResource(getTestRootResource().getPath() + "/node1");
+    ValueMap props = resource1.getValueMap();
     // TODO: enable this test when JCR resource implementation supports writing Date objects (SLING-3846)
-    //assertEquals(DATE_VALUE, props.get("dateProp", Date.class));
+    if (getResourceResolverType() != ResourceResolverType.JCR_MOCK
+        && getResourceResolverType() != ResourceResolverType.JCR_JACKRABBIT) {
+      assertEquals(DATE_VALUE, props.get("dateProp", Date.class));
+    }
+  }
+
+  @Test
+  public void testDatePropertyToCalendar() throws IOException {
+    Resource resource1 = this.resourceResolver.getResource(getTestRootResource().getPath() + "/node1");
+    ValueMap props = resource1.getValueMap();
+    // TODO: enable this test when JCR resource implementation supports writing Date objects (SLING-3846)
+    if (getResourceResolverType() != ResourceResolverType.JCR_MOCK
+        && getResourceResolverType() != ResourceResolverType.JCR_JACKRABBIT) {
+      Calendar calendarValue = props.get("dateProp", Calendar.class);
+      assertNotNull(calendarValue);
+      assertEquals(DATE_VALUE, calendarValue.getTime());
+    }
+  }
+
+  @Test
+  public void testCalendarProperty() throws IOException {
+    Resource resource1 = this.resourceResolver.getResource(getTestRootResource().getPath() + "/node1");
+    ValueMap props = resource1.getValueMap();
     assertEquals(CALENDAR_VALUE.getTime(), props.get("calendarProp", Calendar.class).getTime());
+  }
 
-    // TODO: enable this tests when resource resolver mock supports binary data
-    if (this.resourceResolverType.value() != ResourceResolverType.RESOURCERESOLVER_MOCK) {
-      Resource binaryPropResource = resource1.getChild("binaryProp");
-      InputStream is = binaryPropResource.adaptTo(InputStream.class);
-      byte[] dataFromResource = IOUtils.toByteArray(is);
-      is.close();
-      assertArrayEquals(BINARY_VALUE, dataFromResource);
+  @Test
+  public void testCalendarPropertyToDate() throws IOException {
+    Resource resource1 = this.resourceResolver.getResource(getTestRootResource().getPath() + "/node1");
+    ValueMap props = resource1.getValueMap();
+    Date dateValue = props.get("calendarProp", Date.class);
+    assertNotNull(dateValue);
+    assertEquals(CALENDAR_VALUE.getTime(), dateValue);
+  }
 
-      // read second time to ensure not the original input stream was returned
-      InputStream is2 = binaryPropResource.adaptTo(InputStream.class);
-      byte[] dataFromResource2 = IOUtils.toByteArray(is2);
-      is2.close();
-      assertArrayEquals(BINARY_VALUE, dataFromResource2);
-    }
+  @Test
+  public void testListChildren() throws IOException {
+    Resource resource1 = this.resourceResolver.getResource(getTestRootResource().getPath() + "/node1");
 
-    List<Resource> children = IteratorUtils.toList(resource1.listChildren());
+    List<Resource> children = ImmutableList.copyOf(resource1.listChildren());
     assertEquals(2, children.size());
-    // TODO: enable this tests when resource resolver mock preserves child ordering (SLING-3847)
-    if (this.resourceResolverType.value() != ResourceResolverType.RESOURCERESOLVER_MOCK) {
-      assertEquals("node11", children.get(0).getName());
-      assertEquals("node12", children.get(1).getName());
-    }
+    assertEquals("node11", children.get(0).getName());
+    assertEquals("node12", children.get(1).getName());
+  }
+
+  @Test
+  public void testBinaryData() throws IOException {
+    Resource resource1 = this.resourceResolver.getResource(getTestRootResource().getPath() + "/node1");
+
+    Resource binaryPropResource = resource1.getChild("binaryProp");
+    InputStream is = binaryPropResource.adaptTo(InputStream.class);
+    byte[] dataFromResource = IOUtils.toByteArray(is);
+    is.close();
+    assertArrayEquals(BINARY_VALUE, dataFromResource);
+
+    // read second time to ensure not the original input stream was returned
+    // and this time using another syntax
+    InputStream is2 = resource1.getValueMap().get("binaryProp", InputStream.class);
+    byte[] dataFromResource2 = IOUtils.toByteArray(is2);
+    is2.close();
+    assertArrayEquals(BINARY_VALUE, dataFromResource2);
+  }
+
+
+  @Test
+  public void testPrimaryTypeResourceType() throws PersistenceException {
+    Resource resource = this.resourceResolver.getResource(getTestRootResource().getPath());
+    assertEquals(JcrConstants.NT_UNSTRUCTURED, resource.getResourceType());
   }
 
 }

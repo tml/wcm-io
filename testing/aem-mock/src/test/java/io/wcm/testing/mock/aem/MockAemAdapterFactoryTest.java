@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,11 +23,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import io.wcm.testing.mock.aem.junit.AemContext;
 import io.wcm.testing.mock.sling.ResourceResolverType;
-import io.wcm.testing.mock.sling.contentimport.JsonImporter;
+import io.wcm.testing.mock.sling.loader.ContentLoader;
 
-import java.io.IOException;
-
-import org.apache.sling.api.resource.PersistenceException;
 import org.apache.sling.api.resource.Resource;
 import org.junit.Before;
 import org.junit.Rule;
@@ -37,29 +34,25 @@ import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 import com.day.cq.wcm.api.Template;
 
-@SuppressWarnings("javadoc")
 public class MockAemAdapterFactoryTest {
 
-  //CHECKSTYLE:OFF
   // Run all unit tests for each resource resolver types listed here
   @Rule
-  public final AemContext context = new AemContext(
-      // TODO: disabled until MockResourveResolver extends SlingAdaptable (SLING-3853)
-      //ResourceResolverType.RESOURCERESOLVER_MOCK,
-      ResourceResolverType.JCR_MOCK
+  public AemContext context = new AemContext(
+      ResourceResolverType.JCR_MOCK,
+      ResourceResolverType.RESOURCERESOLVER_MOCK
       );
-  //CHECKSTYLE:ON
 
   @Before
-  public void setUp() throws PersistenceException, IOException {
-    JsonImporter jsonImporter = this.context.jsonImporter();
-    jsonImporter.importTo("/json-import-samples/application.json", "/apps/sample");
-    jsonImporter.importTo("/json-import-samples/content.json", "/content/sample/en");
+  public void setUp() {
+    ContentLoader contentLoader = this.context.load();
+    contentLoader.json("/json-import-samples/application.json", "/apps/sample");
+    contentLoader.json("/json-import-samples/content.json", "/content/sample/en");
   }
 
   @Test
   public void testPageManager() {
-    PageManager pageManager = this.context.resourceResolver().adaptTo(PageManager.class);
+    PageManager pageManager = this.context.pageManager();
     assertNotNull(pageManager);
 
     Page page = pageManager.getPage("/content/sample/en");

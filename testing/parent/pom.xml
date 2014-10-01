@@ -25,13 +25,13 @@
   <parent>
     <groupId>io.wcm</groupId>
     <artifactId>io.wcm.parent_toplevel</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>1.0.1</version>
     <relativePath>../../parent_toplevel/pom.xml</relativePath>
   </parent>
 
   <groupId>io.wcm</groupId>
   <artifactId>io.wcm.testing.parent</artifactId>
-  <version>0.1.0-SNAPSHOT</version>
+  <version>1.0.2-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>Testing</name>
@@ -51,10 +51,16 @@
   <dependencyManagement>
     <dependencies>
 
+      <!-- Versions of implementation artefacts from AEM 6 -->
       <dependency>
-        <groupId>org.apache.commons</groupId>
-        <artifactId>commons-collections4</artifactId>
-        <version>4.0</version>
+        <groupId>commons-lang</groupId>
+        <artifactId>commons-lang</artifactId>
+        <version>2.5</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-beanutils</groupId>
+        <artifactId>commons-beanutils</artifactId>
+        <version>1.8.3</version>
       </dependency>
 
       <dependency>
@@ -90,11 +96,6 @@
       </dependency>
       <dependency>
         <groupId>org.apache.sling</groupId>
-        <artifactId>org.apache.sling.testing.resourceresolver-mock</artifactId>
-        <version>0.2.0</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.sling</groupId>
         <artifactId>org.apache.sling.commons.testing</artifactId>
         <version>2.0.16</version>
         <exclusions>
@@ -108,6 +109,18 @@
           </exclusion>
         </exclusions>
       </dependency>
+      
+      <dependency>
+        <groupId>com.day.commons</groupId>
+        <artifactId>day-commons-gfx</artifactId>
+        <version>2.1.28</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.reflections</groupId>
+        <artifactId>reflections</artifactId>
+        <version>0.9.9-RC2</version>
+      </dependency>
 
       <dependency>
         <groupId>org.slf4j</groupId>
@@ -117,17 +130,17 @@
 
     </dependencies>
   </dependencyManagement>
-  
+
   <build>
     <plugins>
-    
+
       <!-- release plugin -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-release-plugin</artifactId>
         <inherited>false</inherited>
       </plugin>
-    
+
     </plugins>
   </build>
 

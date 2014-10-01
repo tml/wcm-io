@@ -24,7 +24,7 @@
 
   <groupId>io.wcm.maven</groupId>
   <artifactId>io.wcm.maven.global-parent</artifactId>
-  <version>2-SNAPSHOT</version>
+  <version>4-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>io.wcm.maven.global-parent</name>
@@ -104,7 +104,14 @@
       <extension>
         <groupId>io.wcm.maven</groupId>
         <artifactId>io.wcm.maven.global-build-tools</artifactId>
-        <version>1</version>
+        <version>2</version>
+      </extension>
+
+      <!-- SCP support for deploying sites -->
+      <extension>
+        <groupId>org.apache.maven.wagon</groupId>
+        <artifactId>wagon-ssh</artifactId>
+        <version>2.6</version>
       </extension>
 
     </extensions>
@@ -169,6 +176,9 @@
           </excludes>
           <!-- Fix Cobertura with JDK 1.7: see http://stackoverflow.com/questions/7010665/testng-emma-cobertura-coverage-and-jdk-7-result-in-classformaterror-and-verif -->
           <argLine>-Xmx1024m -XX:-UseSplitVerifier</argLine>
+          <!-- Execute tests in parallel by default -->
+          <parallel>classes</parallel>
+          <threadCount>4</threadCount>
         </configuration>
       </plugin>
 
@@ -240,11 +250,26 @@
             </file>
             <file>
               <name>.checkstyle</name>
-              <location>/global-build-tools/eclipse/checkstyle-eclipse-plugin.xml</location>
+              <content>
+                <![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+                <fileset-config file-format-version="1.2.0" simple-config="true" sync-formatter="false">
+                  <local-check-config name="wcm.io" location=".settings/plugins/checkstyle-config.xml" type="project" description="">
+                    <property name="checkstyle.suppressions.file" value="${basedir}/.settings/plugins/checkstyle-suppressions.xml" />
+                    <additional-data name="protect-config-file" value="true" />
+                  </local-check-config>
+                  <fileset name="all" enabled="true" check-config-name="wcm.io" local="true">
+                    <file-match-pattern match-pattern="^.*\.java$" include-pattern="true" />
+                  </fileset>
+                </fileset-config>]]>
+              </content>
             </file>
             <file>
               <name>.settings/plugins/checkstyle-config.xml</name>
               <location>/global-build-tools/checkstyle.xml</location>
+            </file>
+            <file>
+              <name>.settings/plugins/checkstyle-suppressions.xml</name>
+              <location>/global-build-tools/checkstyle-suppressions.xml</location>
             </file>
             <file>
               <name>.settings/plugins/findbugs-exclude.xml</name>
@@ -252,7 +277,15 @@
             </file>
             <file>
               <name>.pmd</name>
-              <location>/global-build-tools/eclipse/pmd-eclipse-plugin.xml</location>
+              <content>
+                <![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+                <pmd>
+                  <useProjectRuleSet>true</useProjectRuleSet>
+                  <ruleSetFile>.settings/plugins/pmd-ruleset.xml</ruleSetFile>
+                  <includeDerivedFiles>false</includeDerivedFiles>
+                  <violationsAsErrors>false</violationsAsErrors>
+                </pmd>]]>
+              </content>
             </file>
             <file>
               <name>.settings/plugins/pmd-ruleset.xml</name>
@@ -290,7 +323,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-changes-plugin</artifactId>
-          <version>2.9</version>
+          <version>2.10</version>
         </plugin>
 
         <plugin>
@@ -299,6 +332,8 @@
           <version>2.12.1</version>
           <configuration>
             <configLocation>global-build-tools/checkstyle.xml</configLocation>
+            <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
+            <suppressionsLocation>global-build-tools/checkstyle-suppressions.xml</suppressionsLocation>
             <encoding>UTF-8</encoding>
             <enableRulesSummary>false</enableRulesSummary>
             <linkXRef>true</linkXRef>
@@ -332,7 +367,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-eclipse-plugin</artifactId>
-          <version>2.10-R1388926-configfix1</version>
+          <version>2.10-R1595624_MECLIPSE-641</version>
         </plugin>
 
         <plugin>
@@ -548,12 +583,6 @@
         </plugin>
 
         <plugin>
-          <groupId>com.github.github</groupId>
-          <artifactId>site-maven-plugin</artifactId>
-          <version>0.9</version>
-        </plugin>
-
-        <plugin>
           <groupId>org.sonatype.plugins</groupId>
           <artifactId>nexus-staging-maven-plugin</artifactId>
           <version>1.6.2</version>
@@ -585,7 +614,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-changes-plugin</artifactId>
-        <version>2.9</version>
+        <version>2.10</version>
         <inherited>true</inherited>
         <configuration>
           <xmlPath>${basedir}/changes.xml</xmlPath>
@@ -732,7 +761,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>dashboard-maven-plugin</artifactId>
-        <version>${dashboard.maven.plugin.version}</version>
+        <version>1.0.0-beta-1</version>
       </plugin>
 
     </plugins>
@@ -741,6 +770,19 @@
 
   <!-- Profiles -->
   <profiles>
+
+    <!-- "Fast" profile for quick compile of the project without any unit tests etc. -->
+    <profile>
+      <id>fast</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <unittests.skip>true</unittests.skip>
+        <integrationtests.skip>true</integrationtests.skip>
+        <maven.javadoc.skip>true</maven.javadoc.skip>
+      </properties>
+    </profile>
 
     <!-- Profile for running unit test and site analysis in CI -->
     <profile>
@@ -895,6 +937,46 @@
             </configuration>
           </plugin>
         </plugins>
+      </build>
+    </profile>
+    
+    <!-- This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself. -->
+    <profile>
+      <id>only-eclipse</id>
+      <activation>
+        <property>
+          <name>m2e.version</name>
+        </property>
+      </activation>
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.eclipse.m2e</groupId>
+              <artifactId>lifecycle-mapping</artifactId>
+              <version>1.0.0</version>
+              <configuration>
+                <lifecycleMappingMetadata>
+                  <pluginExecutions>
+                    <pluginExecution>
+                      <pluginExecutionFilter>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>license-maven-plugin</artifactId>
+                        <versionRange>[1.7,)</versionRange>
+                        <goals>
+                          <goal>check-file-header</goal>
+                        </goals>
+                      </pluginExecutionFilter>
+                      <action>
+                        <ignore />
+                      </action>
+                    </pluginExecution>
+                  </pluginExecutions>
+                </lifecycleMappingMetadata>
+              </configuration>
+            </plugin>
+          </plugins>
+        </pluginManagement>
       </build>
     </profile>
 

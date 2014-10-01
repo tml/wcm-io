@@ -117,21 +117,18 @@
       <item name="Platforms" href="http://wcm.io/platforms.html" />
       <item name="Maven" href="http://wcm.io/maven.html" />
       <item name="GitHub project" href="http://github.com/wcm-io/wcm-io/" />
-      <item name="License" href="license.html" />
+      <item name="License" href="http://wcm.io/license.html" />
+      <item name="Imprint" href="http://wcm.io/imprint.html" />
     </menu>
     <menu name="Modules" inherit="top">
-      <item name="Testing" href="../testing/">
-        <item name="OSGi Mocks" href="../testing/osgi-mock/"/>
-        <item name="JCR Mocks" href="../testing/jcr-mock/"/>
-        <item name="Sling Mocks" href="../testing/sling-mock/"/>
-        <item name="AEM Mocks" href="../testing/aem-mock/"/>
-        <item name="JUnit Commons" href="../testing/junit-commons/"/>
-      </item>
+      <item name="Sling" href="../sling/"/>
+      <item name="Testing" href="../testing/"/>
     </menu>
     <menu name="Contribute" inherit="top">
       <item name="Contribute" href="http://wcm.io/contribute.html" />
       <item name="Manifest" href="http://wcm.io/manifest.html" />
       <item name="Issues" href="http://github.com/wcm-io/wcm-io/issues/" />
+      <item name="Continuous Integration" href="https://travis-ci.org/wcm-io/wcm-io/" />
       <item name="Fork on GitHub" href="http://github.com/wcm-io/wcm-io/" />
     </menu>
     <menu name="Maven documentation" inherit="top" ref="reports"/>

@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -66,7 +66,7 @@ class MockServiceReference implements ServiceReference {
 
   @Override
   public int hashCode() {
-    return ((Long)getService()).hashCode();
+    return ((Long)getServiceId()).hashCode();
   }
 
   @Override
@@ -83,8 +83,8 @@ class MockServiceReference implements ServiceReference {
       return 0;
     }
     // sort by decreasing by service ranking, and secondary increasing by service id
-    Long serviceRanking = getServiceRanking();
-    Long otherServiceRanking = ((MockServiceReference)obj).getServiceRanking();
+    Integer serviceRanking = getServiceRanking();
+    Integer otherServiceRanking = ((MockServiceReference)obj).getServiceRanking();
     int serviceRankingCompare = otherServiceRanking.compareTo(serviceRanking);
     if (serviceRankingCompare == 0) {
       Long serviceId = getServiceId();
@@ -106,13 +106,13 @@ class MockServiceReference implements ServiceReference {
     }
   }
 
-  long getServiceRanking() {
+  int getServiceRanking() {
     Number serviceRanking = (Number)getProperty(Constants.SERVICE_RANKING);
     if (serviceRanking != null) {
-      return serviceRanking.longValue();
+      return serviceRanking.intValue();
     }
     else {
-      return 0L;
+      return 0;
     }
   }
 

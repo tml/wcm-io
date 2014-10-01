@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,16 +19,19 @@
  */
 package io.wcm.testing.mock.osgi;
 
-import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.Map;
 import java.util.Set;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
+import org.w3c.dom.Document;
+
+import com.google.common.collect.ImmutableList;
 
 /**
  * Mock {@link ServiceRegistration} implementation.
@@ -45,11 +48,12 @@ class MockServiceRegistration implements ServiceRegistration {
   @SuppressWarnings("unchecked")
   public MockServiceRegistration(final Bundle bundle, final String[] clazzes, final Object service,
       final Dictionary<String, Object> properties) {
-    this.clazzes = new HashSet<>(Arrays.asList(clazzes));
+    this.clazzes = new HashSet<>(ImmutableList.copyOf(clazzes));
     this.service = service;
     this.properties = properties != null ? properties : new Hashtable();
     this.properties.put(Constants.SERVICE_ID, ++serviceCounter);
     this.serviceReference = new MockServiceReference(bundle, this);
+    readOsgiMetadata();
   }
 
   @Override
@@ -79,6 +83,23 @@ class MockServiceRegistration implements ServiceRegistration {
 
   Object getService() {
     return this.service;
+  }
+
+  /**
+   * Try to read OSGI-metadata from /OSGI-INF and read all implemented interfaces and service properties
+   */
+  private void readOsgiMetadata() {
+    Class<?> serviceClass = service.getClass();
+    Document doc = OsgiMetadataUtil.getMetadata(serviceClass);
+
+    // add service interfaces from OSGi metadata
+    clazzes.addAll(OsgiMetadataUtil.getServiceInterfaces(serviceClass, doc));
+
+    // add properties from OSGi metadata
+    Map<String, Object> props = OsgiMetadataUtil.getProperties(serviceClass, doc);
+    for (Map.Entry<String, Object> entry : props.entrySet()) {
+      properties.put(entry.getKey(), entry.getValue());
+    }
   }
 
 }

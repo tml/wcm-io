@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,6 +18,8 @@
  * #L%
  */
 package io.wcm.testing.mock.sling.servlet;
+
+import io.wcm.testing.mock.sling.MockSling;
 
 import java.io.BufferedReader;
 import java.io.UnsupportedEncodingException;
@@ -47,8 +49,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-import org.apache.commons.collections4.IteratorUtils;
+import org.apache.commons.collections.IteratorUtils;
 import org.apache.commons.lang3.CharEncoding;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.adapter.SlingAdaptable;
 import org.apache.sling.api.request.RequestDispatcherOptions;
@@ -62,7 +65,7 @@ import org.apache.sling.api.resource.ResourceResolver;
 /**
  * Mock {@link SlingHttpServletRequest} implementation.
  */
-public class MockSlingHttpServletRequest extends SlingAdaptable implements SlingHttpServletRequest {
+public final class MockSlingHttpServletRequest extends SlingAdaptable implements SlingHttpServletRequest {
 
   private final ResourceResolver resourceResolver;
   private final RequestPathInfo requestPathInfo = new MockRequestPathInfo();
@@ -72,6 +75,16 @@ public class MockSlingHttpServletRequest extends SlingAdaptable implements Sling
   private Resource resource;
   private String contextPath;
   private String queryString;
+  private String scheme = "http";
+  private String serverName = "localhost";
+  private int serverPort = 80;
+
+  /**
+   * Instantiate with default resource resolver
+   */
+  public MockSlingHttpServletRequest() {
+    this.resourceResolver = MockSling.newResourceResolver();
+  }
 
   /**
    * @param resourceResolver Resource resolver
@@ -108,6 +121,7 @@ public class MockSlingHttpServletRequest extends SlingAdaptable implements Sling
     return this.attributeMap.get(name);
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public Enumeration<String> getAttributeNames() {
     return IteratorUtils.asEnumeration(this.attributeMap.keySet().iterator());
@@ -128,9 +142,6 @@ public class MockSlingHttpServletRequest extends SlingAdaptable implements Sling
     return this.resource;
   }
 
-  /**
-   * @param resource
-   */
   public void setResource(final Resource resource) {
     this.resource = resource;
   }
@@ -155,13 +166,14 @@ public class MockSlingHttpServletRequest extends SlingAdaptable implements Sling
     return this.parameterMap;
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public Enumeration<String> getParameterNames() {
     return IteratorUtils.asEnumeration(this.parameterMap.keySet().iterator());
   }
 
   @Override
-  public String[] getParameterValues(final String name) {
+  public String[] getParameterValues(final String name) { //NOPMD
     Object object = this.parameterMap.get(name);
     if (object instanceof String) {
       return new String[] {
@@ -171,11 +183,11 @@ public class MockSlingHttpServletRequest extends SlingAdaptable implements Sling
     else if (object instanceof String[]) {
       return (String[])object;
     }
-    return null;
+    return null; //NOPMD
   }
 
   /**
-   * @param parameterMap
+   * @param parameterMap Map of parameters
    */
   public void setParameterMap(final Map<String, String[]> parameterMap) {
     this.parameterMap.clear();
@@ -194,11 +206,13 @@ public class MockSlingHttpServletRequest extends SlingAdaptable implements Sling
       if (entry.getValue() != null) {
         for (String value : entry.getValue()) {
           if (querystring.length() != 0) {
-            querystring.append("&");
+            querystring.append('&');
           }
           querystring.append(URLEncoder.encode(entry.getKey(), CharEncoding.UTF_8));
-          querystring.append("=");
-          querystring.append(URLEncoder.encode(value, CharEncoding.UTF_8));
+          querystring.append('=');
+          if (value != null) {
+            querystring.append(URLEncoder.encode(value, CharEncoding.UTF_8));
+          }
         }
       }
     }
@@ -246,7 +260,7 @@ public class MockSlingHttpServletRequest extends SlingAdaptable implements Sling
     final Map<String, List<String>> queryPairs = new LinkedHashMap<>();
     final String[] pairs = query.split("&");
     for (String pair : pairs) {
-      final int idx = pair.indexOf("=");
+      final int idx = pair.indexOf('=');
       final String key = idx > 0 ? URLDecoder.decode(pair.substring(0, idx), CharEncoding.UTF_8) : pair;
       if (!queryPairs.containsKey(key)) {
         queryPairs.put(key, new ArrayList<String>());
@@ -265,6 +279,37 @@ public class MockSlingHttpServletRequest extends SlingAdaptable implements Sling
     return this.queryString;
   }
 
+  @Override
+  public String getScheme() {
+    return this.scheme;
+  }
+
+  public void setScheme(String scheme) {
+    this.scheme = scheme;
+  }
+
+  @Override
+  public String getServerName() {
+    return this.serverName;
+  }
+
+  public void setServerName(String serverName) {
+    this.serverName = serverName;
+  }
+
+  @Override
+  public int getServerPort() {
+    return this.serverPort;
+  }
+
+  public void setServerPort(int serverPort) {
+    this.serverPort = serverPort;
+  }
+
+  @Override
+  public boolean isSecure() {
+    return StringUtils.equals("https", getScheme());
+  }
 
   // --- unsupported operations ---
   @Override
@@ -504,26 +549,6 @@ public class MockSlingHttpServletRequest extends SlingAdaptable implements Sling
 
   @Override
   public RequestDispatcher getRequestDispatcher(final String path) {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public String getScheme() {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public String getServerName() {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public int getServerPort() {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public boolean isSecure() {
     throw new UnsupportedOperationException();
   }
 

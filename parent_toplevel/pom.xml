@@ -25,13 +25,13 @@
   <parent>
     <groupId>io.wcm.maven</groupId>
     <artifactId>io.wcm.maven.aem-global-parent</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
-    <relativePath/>
+    <version>1.0.1</version>
+    <relativePath />
   </parent>
 
   <groupId>io.wcm</groupId>
   <artifactId>io.wcm.parent_toplevel</artifactId>
-  <version>0.1.0-SNAPSHOT</version>
+  <version>1.0.2-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>Toplevel Parent</name>
@@ -52,11 +52,21 @@
     <url>http://wcm.io</url>
   </organization>
 
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/wcm-io/wcm-io/issues</url>
+  </issueManagement>
+
+  <ciManagement>
+    <system>Travis CI</system>
+    <url>https://travis-ci.org/wcm-io/wcm-io</url>
+  </ciManagement>
+
   <developers>
     <developer>
-      <name>Stefan Seifert</name>
-      <organization>pro!vision GmbH</organization>
-      <organizationUrl>https://www.pro-vision.de</organizationUrl>
+      <name>wcm.io Community</name>
+      <organization>wcm.io</organization>
+      <organizationUrl>http://wcm.io</organizationUrl>
     </developer>
   </developers>
 
@@ -81,11 +91,8 @@
     <!-- site settings -->
     <site.url.module.prefix>parent_toplevel</site.url.module.prefix>
     <site.url>http://wcm.io</site.url>
-    <site.deploy.id>github-pages</site.deploy.id>
-    <site.deploy.url/>
-
-    <!-- github settings -->
-    <github.global.server>github</github.global.server>
+    <site.deploy.id>ssh-wcm.io</site.deploy.id>
+    <site.deploy.url>scp://wcm.io:222/var/www/wcm.io/www/</site.deploy.url>
 
   </properties>
 
@@ -108,11 +115,23 @@
   <dependencyManagement>
     <dependencies>
 
-      <!-- Import CQ dependencies -->
+      <!-- Depend on newer Sling artifact versions than included in AEM API -->
+      <dependency>
+        <groupId>org.apache.sling</groupId>
+        <artifactId>org.apache.sling.models.api</artifactId>
+        <version>1.1.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.sling</groupId>
+        <artifactId>org.apache.sling.models.impl</artifactId>
+        <version>1.1.0</version>
+      </dependency>
+
+      <!-- Import AEM dependencies -->
       <dependency>
         <groupId>io.wcm.maven</groupId>
         <artifactId>io.wcm.maven.aem-dependencies</artifactId>
-        <version>6.0.0.0000-SNAPSHOT</version>
+        <version>6.0.0.0000</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -177,31 +196,13 @@
           <generateReports>true</generateReports>
           <inputEncoding>UTF-8</inputEncoding>
           <outputEncoding>UTF-8</outputEncoding>
-          <!-- Site deployment done using GitHub site plugin -->
-          <skipDeploy>true</skipDeploy>
-        </configuration>
-      </plugin>
-
-      <!-- GitHub site plug-in for deployment to GitHub pages -->
-      <plugin>
-        <groupId>com.github.github</groupId>
-        <artifactId>site-maven-plugin</artifactId>
-        <configuration>
-          <branch>refs/heads/master</branch>
-          <message>Creating site for ${project.artifactId}, ${project.version}</message>
-          <path>${project.distributionManagement.site.url}</path>
-          <merge>true</merge>
-          <noJekyll>true</noJekyll>
-          <repositoryOwner>wcm-io</repositoryOwner>
-          <repositoryName>wcm-io.github.io</repositoryName>
         </configuration>
         <executions>
           <execution>
-            <id>github-site</id>
+            <id>attach-descriptor</id>
             <goals>
-              <goal>site</goal>
+              <goal>attach-descriptor</goal>
             </goals>
-            <phase>site-deploy</phase>
           </execution>
         </executions>
       </plugin>
@@ -219,6 +220,7 @@
             <instructions>
               <Bundle-Category>wcm.io</Bundle-Category>
               <Bundle-Vendor>wcm.io</Bundle-Vendor>
+              <Bundle-Name>wcm.io ${project.name}</Bundle-Name>
             </instructions>
           </configuration>
         </plugin>
@@ -230,8 +232,21 @@
             <licenseName>apache_v2</licenseName>
             <addJavaLicenseAfterPackage>false</addJavaLicenseAfterPackage>
             <projectName>wcm.io</projectName>
+            <excludes>
+              <exclude>**/*.json</exclude>
+              <exclude>**/*.html</exclude>
+            </excludes>
           </configuration>
         </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <configuration>
+            <excludePackageNames>*.impl</excludePackageNames>
+          </configuration>
+        </plugin>
+
       </plugins>
 
     </pluginManagement>

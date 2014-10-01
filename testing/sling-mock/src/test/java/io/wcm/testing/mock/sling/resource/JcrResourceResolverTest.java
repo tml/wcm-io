@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -22,9 +22,7 @@ package io.wcm.testing.mock.sling.resource;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import io.wcm.testing.junit.rules.parameterized.Generator;
-import io.wcm.testing.junit.rules.parameterized.GeneratorFactory;
-import io.wcm.testing.mock.sling.MockSlingFactory;
+import io.wcm.testing.mock.sling.MockSling;
 import io.wcm.testing.mock.sling.ResourceResolverType;
 
 import java.io.ByteArrayInputStream;
@@ -38,34 +36,23 @@ import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 
-import org.apache.commons.collections4.IteratorUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.jackrabbit.JcrConstants;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ValueMap;
-import org.apache.sling.commons.testing.jcr.RepositoryUtil;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
+
+import com.google.common.collect.ImmutableList;
 
 /**
  * Implements simple write and read resource and values test.
  * JCR API is used to create the test data.
  */
-@SuppressWarnings("javadoc")
 public class JcrResourceResolverTest {
-
-  //CHECKSTYLE:OFF
-  // Run all unit tests for each resource resolver typ listed here
-  @Rule
-  public final Generator<ResourceResolverType> resourceResolverType = GeneratorFactory.list(
-      ResourceResolverType.JCR_MOCK,
-      ResourceResolverType.JCR_JACKRABBIT
-      );
-  //CHECKSTYLE:ON
 
   private static final String STRING_VALUE = "value1";
   private static final String[] STRING_ARRAY_VALUE = new String[] {
@@ -85,14 +72,18 @@ public class JcrResourceResolverTest {
   protected Node testRoot;
   private static volatile long rootNodeCounter;
 
-  @Before
-  public void setUp() throws RepositoryException, IOException {
-    this.resourceResolver = MockSlingFactory.newResourceResolver(this.resourceResolverType.value());
-    this.session = this.resourceResolver.adaptTo(Session.class);
+  protected ResourceResolverType getResourceResolverType() {
+    return ResourceResolverType.JCR_MOCK;
+  }
 
-    if (this.resourceResolverType.value() == ResourceResolverType.JCR_JACKRABBIT) {
-      RepositoryUtil.registerSlingNodeTypes(this.session);
-    }
+  protected ResourceResolver newResourceResolver() {
+    return MockSling.newResourceResolver(getResourceResolverType());
+  }
+
+  @Before
+  public final void setUp() throws RepositoryException {
+    this.resourceResolver = newResourceResolver();
+    this.session = this.resourceResolver.adaptTo(Session.class);
 
     // prepare some test data using JCR API
     Node rootNode = getTestRootNode();
@@ -114,7 +105,7 @@ public class JcrResourceResolverTest {
   }
 
   @After
-  public void tearDown() {
+  public final void tearDown() {
     this.testRoot = null;
   }
 
@@ -124,7 +115,7 @@ public class JcrResourceResolverTest {
   private Node getTestRootNode() throws RepositoryException {
     if (this.testRoot == null) {
       final Node root = this.session.getRootNode();
-      if (this.resourceResolverType.value() == ResourceResolverType.JCR_JACKRABBIT) {
+      if (getResourceResolverType() == ResourceResolverType.JCR_JACKRABBIT) {
         final Node classRoot = root.addNode(getClass().getSimpleName());
         this.testRoot = classRoot.addNode(System.currentTimeMillis() + "_" + (rootNodeCounter++));
       }
@@ -162,7 +153,7 @@ public class JcrResourceResolverTest {
     is2.close();
     assertArrayEquals(BINARY_VALUE, dataFromResource2);
 
-    List<Resource> children = IteratorUtils.toList(resource1.listChildren());
+    List<Resource> children = ImmutableList.copyOf(resource1.listChildren());
     assertEquals(2, children.size());
     assertEquals("node11", children.get(0).getName());
     assertEquals("node12", children.get(1).getName());

@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,15 +24,15 @@ import java.util.Set;
 import javax.jcr.NamespaceRegistry;
 import javax.jcr.RepositoryException;
 
-import org.apache.commons.collections4.BidiMap;
-import org.apache.commons.collections4.bidimap.DualLinkedHashBidiMap;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 
 /**
  * Mock {@link NamespaceRegistry} implementation.
  */
 class MockNamespaceRegistry implements NamespaceRegistry {
 
-  private final BidiMap<String, String> namespacePrefixMapping = new DualLinkedHashBidiMap<>();
+  private final BiMap<String, String> namespacePrefixMapping = HashBiMap.create();
 
   public MockNamespaceRegistry() {
     this.namespacePrefixMapping.put("jcr", "http://www.jcp.org/jcr/1.0");
@@ -45,7 +45,7 @@ class MockNamespaceRegistry implements NamespaceRegistry {
 
   @Override
   public String getPrefix(final String uri) {
-    return this.namespacePrefixMapping.getKey(uri);
+    return this.namespacePrefixMapping.inverse().get(uri);
   }
 
   @Override

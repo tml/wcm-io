@@ -8,14 +8,14 @@ Mock implementation of selected Sling APIs.
 <dependency>
   <groupId>io.wcm</groupId>
   <artifactId>io.wcm.testing.sling-mock</artifactId>
-  <version>0.1.0</version>
+  <version>1.0.0</version>
 </dependency>
 ```
 
 ### Documentation
 
 * [Sling Mocks Usage][usage-mocks]
-* [JSON Importer Usage][usage-json-importer]
+* [Content Loader Usage][usage-content-loader]
 * [API Documentation][apidocs]
 * [Changelog][changelog]
 
@@ -34,7 +34,7 @@ The mock implementation supports:
    OSGi services from the [mocked OSGi][osgi-mock] environment.
 * Implementations of the servlet-related Sling API classes like `SlingHttpServletRequest` and `SlingHttpServletRequest`
     * It is possible to set request data to simulate a certian Sling HTTP request
-* Additional services like `MimeTypeService` 
+* Additional services like `MockModelAdapterFactory` and  `MimeTypeService` 
 
 [osgi-mock]: http://wcm.io/testing/osgi-mock/
 [jcr-mock]: http://wcm.io/testing/jcr-mock/
@@ -52,13 +52,13 @@ See [Sling Mocks Usage][usage-mocks].
 
 Additional features provided:
 
-* `JsonImporter` supports importing JSON data into the mock resource hierarchy to easily prepare a test fixture
-  consisting of a hierarchy of resources and properties.
+* `ContentLoader` supports importing JSON data and binary data into the mock resource hierarchy to easily 
+  prepare a test fixture consisting of a hierarchy of resources and properties.
     * The same JSON format can be used that is provided by the Sling GET servlet for output
 
-See [JSON Importer Usage][usage-json-importer].
+See [Content Loader Usage][usage-content-loader].
 
 [usage-mocks]: usage-mocks.html
-[usage-json-importer]: usage-json-importer.html
+[usage-content-loader]: usage-content-loader.html
 [apidocs]: apidocs/
 [changelog]: changes-report.html

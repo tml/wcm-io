@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -27,9 +27,6 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import io.wcm.testing.mock.aem.junit.AemContext;
-import io.wcm.testing.mock.sling.contentimport.JsonImporter;
-
-import java.io.IOException;
 
 import org.apache.sling.api.resource.PersistenceException;
 import org.apache.sling.api.resource.Resource;
@@ -47,14 +44,11 @@ import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 import com.day.cq.wcm.api.WCMException;
 
-@SuppressWarnings("javadoc")
 @RunWith(MockitoJUnitRunner.class)
 public class MockPageManagerTest {
 
-  //CHECKSTYLE:OFF
   @Rule
-  public final AemContext context = new AemContext();
-  //CHECKSTYLE:ON
+  public AemContext context = new AemContext();
 
   private PageManager pageManager;
 
@@ -65,8 +59,7 @@ public class MockPageManagerTest {
     // allow to verify calls to resource resolver
     this.resourceResolver = spy(this.context.resourceResolver());
 
-    JsonImporter jsonImporter = this.context.jsonImporter();
-    jsonImporter.importTo("/json-import-samples/content.json", "/content/sample/en");
+    context.load().json("/json-import-samples/content.json", "/content/sample/en");
 
     this.pageManager = this.resourceResolver.adaptTo(PageManager.class);
   }
@@ -169,8 +162,8 @@ public class MockPageManagerTest {
   }
 
   @Test
-  public void testGetTemplate() throws PersistenceException, IOException {
-    this.context.jsonImporter().importTo("/json-import-samples/application.json", "/apps/sample");
+  public void testGetTemplate() {
+    this.context.load().json("/json-import-samples/application.json", "/apps/sample");
     assertNotNull(this.pageManager.getTemplate("/apps/sample/templates/homepage"));
     assertNull(this.pageManager.getTemplate("/apps/sample/templates/nonExisting"));
   }

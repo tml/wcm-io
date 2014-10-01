@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -31,7 +31,6 @@ import javax.jcr.SimpleCredentials;
 import org.junit.Before;
 import org.junit.Test;
 
-@SuppressWarnings("javadoc")
 public class MockRepositoryTest {
 
   private static final String USER_NAME = "user";
@@ -41,15 +40,15 @@ public class MockRepositoryTest {
 
   @Before
   public void setUp() {
-    this.repository = MockJcrFactory.newRepository();
+    this.repository = MockJcr.newRepository();
   }
 
   @Test
   public void testLogin() throws RepositoryException {
     assertNotNull(this.repository.login());
     assertNotNull(this.repository.login(new SimpleCredentials(USER_NAME, PASSWORD)));
-    assertNotNull(this.repository.login(MockJcrFactory.DEFAULT_WORKSPACE));
-    assertNotNull(this.repository.login(new SimpleCredentials(USER_NAME, PASSWORD), MockJcrFactory.DEFAULT_WORKSPACE));
+    assertNotNull(this.repository.login(MockJcr.DEFAULT_WORKSPACE));
+    assertNotNull(this.repository.login(new SimpleCredentials(USER_NAME, PASSWORD), MockJcr.DEFAULT_WORKSPACE));
   }
 
   @Test

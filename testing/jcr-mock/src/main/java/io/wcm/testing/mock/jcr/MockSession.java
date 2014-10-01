@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -22,15 +22,26 @@ package io.wcm.testing.mock.jcr;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import javax.jcr.*;
+import javax.jcr.Credentials;
+import javax.jcr.Item;
+import javax.jcr.ItemNotFoundException;
+import javax.jcr.Node;
+import javax.jcr.PathNotFoundException;
+import javax.jcr.Property;
+import javax.jcr.RangeIterator;
+import javax.jcr.Repository;
+import javax.jcr.RepositoryException;
+import javax.jcr.Session;
+import javax.jcr.ValueFactory;
+import javax.jcr.Workspace;
 import javax.jcr.retention.RetentionManager;
 import javax.jcr.security.AccessControlManager;
 
-import org.apache.commons.collections4.map.ListOrderedMap;
 import org.apache.jackrabbit.commons.iterator.RangeIteratorAdapter;
 import org.apache.jackrabbit.value.ValueFactoryImpl;
 import org.xml.sax.ContentHandler;
@@ -44,8 +55,8 @@ class MockSession implements Session {
   private final Repository repository;
   private final Workspace workspace;
 
-  // Use ordered map to ensure ordering when adding items is preserved.
-  private final Map<String, Item> items = new ListOrderedMap<>();
+  // Use linked hashmap to ensure ordering when adding items is preserved.
+  private final Map<String, Item> items = new LinkedHashMap<>();
 
   public MockSession(final Repository repository) {
     this.repository = repository;
@@ -178,10 +189,9 @@ class MockSession implements Session {
 
     // collect child resources
     for (Item item : this.items.values()) {
-      if (pattern.matcher(item.getPath()).matches()) {
-        if (filter == null || filter.accept(item)) {
-          children.add(item);
-        }
+      if (pattern.matcher(item.getPath()).matches()
+          && (filter == null || filter.accept(item))) {
+        children.add(item);
       }
     }
 

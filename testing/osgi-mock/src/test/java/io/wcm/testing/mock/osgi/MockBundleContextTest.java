@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,26 +23,35 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleEvent;
+import org.osgi.framework.BundleListener;
 import org.osgi.framework.Constants;
 import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceEvent;
+import org.osgi.framework.ServiceListener;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 
-@SuppressWarnings("javadoc")
+@RunWith(MockitoJUnitRunner.class)
 public class MockBundleContextTest {
 
   private BundleContext bundleContext;
 
   @Before
   public void setUp() {
-    this.bundleContext = MockOsgiFactory.newBundleContext();
+    this.bundleContext = MockOsgi.newBundleContext();
   }
 
   @Test
@@ -115,13 +124,36 @@ public class MockBundleContextTest {
   }
 
   @Test
-  public void testListener() throws Exception {
+  public void testServiceListener() throws Exception {
+    ServiceListener serviceListener = mock(ServiceListener.class);
+    bundleContext.addServiceListener(serviceListener);
+
+    // prepare test services
+    String clazz1 = String.class.getName();
+    Object service1 = new Object();
+    this.bundleContext.registerService(clazz1, service1, null);
+
+    verify(serviceListener).serviceChanged(any(ServiceEvent.class));
+
+    bundleContext.removeServiceListener(serviceListener);
+  }
+
+  @Test
+  public void testBundleListener() throws Exception {
+    BundleListener bundleListener = mock(BundleListener.class);
+    BundleEvent bundleEvent = mock(BundleEvent.class);
+
+    bundleContext.addBundleListener(bundleListener);
+
+    MockOsgi.sendBundleEvent(bundleContext, bundleEvent);
+    verify(bundleListener).bundleChanged(bundleEvent);
+
+    bundleContext.removeBundleListener(bundleListener);
+  }
+
+  @Test
+  public void testFrameworkListener() throws Exception {
     // ensure that listeners can be called (although they are not expected to to anything)
-    this.bundleContext.addServiceListener(null);
-    this.bundleContext.addServiceListener(null, null);
-    this.bundleContext.removeServiceListener(null);
-    this.bundleContext.addBundleListener(null);
-    this.bundleContext.removeBundleListener(null);
     this.bundleContext.addFrameworkListener(null);
     this.bundleContext.removeFrameworkListener(null);
   }

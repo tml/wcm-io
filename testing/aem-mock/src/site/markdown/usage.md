@@ -44,63 +44,6 @@ Additionally it supports:
 * Accessing JSON Importer
 
 
-### JSON Data as Test Fixture
-
-Although it is possible to create a resource data hierarchy as text fixture manually using either Sling CRUD API
-or JCR API this can getting very tedious and affords a lot of boilerplate code. To make this easier a `JsonImporter`
-is provided which allows importing sample data stored as a JSON file in the classpath of the unit test and running
-the tests against this. This importer is provided by the [Sling Mocks][sling-mock] implementation.
-
-Example JSON data:
-
-```json
-{
-  "jcr:primaryType": "cq:Page",
-  "jcr:content": {
-    "jcr:primaryType": "cq:PageContent",
-    "jcr:title": "English",
-    "cq:template": "/apps/sample/templates/homepage",
-    "sling:resourceType": "sample/components/homepage",
-    "jcr:createdBy": "admin",
-    "jcr:created": "Thu Aug 07 2014 16:32:59 GMT+0200",
-    "par": {
-      "jcr:primaryType": "nt:unstructured",
-      "sling:resourceType": "foundation/components/parsys",
-      "colctrl": {
-        "jcr:primaryType": "nt:unstructured",
-        "layout": "2;cq-colctrl-lt0",
-        "sling:resourceType": "foundation/components/parsys/colctrl"
-      }
-    }
-  }
-}
-```
-
-Example unit test:
-
-```java
-public class ExampleTest {
-
-  @Rule
-  public final AemContext context = new AemContext();
-
-  @Before
-  public void setUp() throws Exception {
-    context.jsonImporter().importTo("/sample-data.json", "/content/sample/en");
-  }
-
-  @Test
-  public void testSomething() {
-    Resource resource = context.resourceResolver().getResource("/content/sample/en");
-    Page page = resource.adaptTo(Page.class);
-    // further testing
-  }
-
-}
-
-```
-
-
 ### Choosing Resource Resolver Mock Type
 
 The AEM mock context supports different resource resolver types (provided by the [Sling Mocks][sling-mock]
@@ -110,14 +53,14 @@ implementation). Example:
 public class ExampleTest {
 
   @Rule
-  public final AemContext context = new AemContext(ResourceResolverType.JCR_MOCK);
+  public final AemContext context = new AemContext(ResourceResolverType.RESOURCERESOLVER_MOCK);
 
 }
 
 ```
 
-Different resource resolver mock types are supported with pros and cons, see [Sling Mocks Usage][sling-mock-usage]
-for details.
+Different resource resolver mock types are supported with pros and cons, see
+[Resource Resolver Types][sling-mock-rrtypes] for details.
 
 It is even possible to supply multiple resource resolver types in the constructor argument - in this case the
 unit test is run multiple times, once for each type. But this is only relevant if you want to develop your own
@@ -137,20 +80,18 @@ public class ExampleTest {
 
   @Test
   public void testSomething() {
-    PageManager pageManager = context.resourceResolver().adaptTo(PageManager.class);
-    Page page = pageManager.getPage("/content/sample/en");
+    Page page = context.pageManager().getPage("/content/sample/en");
     Template template = page.getTemplate();
     Iterator<Page> childPages = page.listChildren();
     // further testing
   }
 
   @Test
-  public void testPageManagerOperations() {
-    PageManager pageManager = context.resourceResolver().adaptTo(PageManager.class);
-    Page page = pageManager.create("/content/sample/en", "test1",
+  public void testPageManagerOperations() throws WCMException {
+    Page page = context.pageManager().create("/content/sample/en", "test1",
         "/apps/sample/templates/homepage", "title1");
     // further testing
-    pageManager.delete(page, false);
+    context.pageManager().delete(page, false);
   }
 
 }
@@ -164,14 +105,16 @@ Example for preparing a sling request with custom request data:
 
 ```java
 // prepare sling request
-MockSlingHttpServletRequest request = (MockSlingHttpServletRequest)context.getRequest();
+context.request().setQueryString("param1=aaa&param2=bbb");
 
-request.setQueryString("param1=aaa&param2=bbb");
-request.setResource(resourceResolver.getResource("/content/sample"));
+context.requestPathInfo().setSelectorString("selector1.selector2");
+context.requestPathInfo().setExtension("html");
 
-MockRequestPathInfo requestPathInfo = (MockRequestPathInfo)request.getRequestPathInfo();
-requestPathInfo.setSelectorString("selector1.selector2");
-requestPathInfo.setExtension("html");
+// set current page
+context.currentPage("/content/sample/en");
+
+// set WCM Mode
+WCMMode.EDIT.toRequest(context.request());
 ```
 
 ### Registering OSGi service
@@ -182,12 +125,15 @@ Example for registering and getting an OSGi service for a unit test:
 // register OSGi service
 context.registerService(MyClass.class, myService);
 
+// or alternatively: inject dependencies, activate and register OSGi service
+context.registerInjectActivateService(myService);
+
 // get OSGi service
 MyClass service = context.slingScriptHelper().getService(MyClass.class);
 
-// or alternatively
+// or alternatively: get OSGi service via bundle context
 ServiceReference ref = context.bundleContext().getServiceReference(MyClass.class.getName());
-MyClass service2 = bundleContext.getService(ref);
+MyClass service2 = context.bundleContext().getService(ref);
 ```
 
 
@@ -199,7 +145,7 @@ Example:
 
 ```java
 // register adapter factory
-context.registerAdapterFactory(myAdapterFactory);
+context.registerService(myAdapterFactory);
 
 // test adaption
 MyClass object = resource.adaptTo(MyClass.class);
@@ -208,7 +154,94 @@ MyClass object = resource.adaptTo(MyClass.class);
 You do not have to care about cleaning up the registrations - this is done automatically by the `AemContext` rule.
 
 
+### Sling Models
+
+Example:
+
+```java
+@Before
+public void setUp() {
+  // register models from package
+  context.addModelsForPackage("com.app1.models");
+}
+
+@Test
+public void testSomething() {
+  RequestAttributeModel model = context.request().adaptTo(RequestAttributeModel.class);
+  // further testing
+}
+
+@Model(adaptables = SlingHttpServletRequest.class)
+interface RequestAttributeModel {
+  @Inject
+  String getProp1();
+}
+```
+
+
+### Setting run modes
+
+Example:
+
+```java
+// set runmode for unit test
+context.runMode("author");
+```
+
+This sets the current run mode(s) in a mock version of `SlingSettingsService`.
+
+
+### Application-specific AEM context
+
+When building unit test suites for your AEM application you have usually to execute always some application-specific
+preparation tasks, e.g. register custom services, adapter factories or import sample content. This can be done
+in a convenience class using a `SetupCallback`. Example:
+
+```java
+public final class AppAemContext {
+
+  public static AemContext newAemContext() {
+    return new AemContext(new SetUpCallback());
+  }
+
+  private static final class SetUpCallback implements AemContextCallback {
+
+    @Override
+    public void execute(AemContext context) throws PersistenceException, IOException {
+
+      // application-specific services for unit tests
+      context.registerService(AdapterFactory.class, new AppAdapterFactory());
+      context.registerService(new AemObjectInjector());
+
+      // import sample content
+      context.contentLoader().json("/sample-content.json", "/content/sample/en");
+
+      // set default current page
+      context.currentPage("/content/sample/en");
+    }
+
+  }
+
+}
+```
+
+In the unit test you can use this customized AEM context:
+
+```java
+public class MyTest {
+
+  @Rule
+  public final AemContext context = AppAemContext.newAemContext();
+
+  @Test
+  public void testSomething() {
+    // do test
+  }
+
+}
+```
+
 
 [mockito-testrunner]: http://docs.mockito.googlecode.com/hg/latest/org/mockito/runners/MockitoJUnitRunner.html
 [sling-mock]: http://wcm.io/testing/sling-mock/
-[sling-mock-usage]: http://wcm.io/testing/sling-mock/usage-mocks.html
+[sling-mock-rrtypes]: http://wcm.io/testing/sling-mock/resource-resolver-types.html

@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,7 +23,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import io.wcm.testing.mock.aem.junit.AemContext;
-import io.wcm.testing.mock.sling.contentimport.JsonImporter;
 
 import org.apache.sling.api.resource.Resource;
 import org.junit.Before;
@@ -32,20 +31,16 @@ import org.junit.Test;
 
 import com.day.cq.wcm.api.Template;
 
-@SuppressWarnings("javadoc")
 public class MockTemplateTest {
 
-  //CHECKSTYLE:OFF
   @Rule
-  public final AemContext context = new AemContext();
-  //CHECKSTYLE:ON
+  public AemContext context = new AemContext();
 
   private Template template;
 
   @Before
   public void setUp() throws Exception {
-    JsonImporter jsonImporter = this.context.jsonImporter();
-    jsonImporter.importTo("/json-import-samples/application.json", "/apps/sample");
+    context.load().json("/json-import-samples/application.json", "/apps/sample");
 
     Resource resource = this.context.resourceResolver().getResource("/apps/sample/templates/homepage");
     this.template = resource.adaptTo(Template.class);

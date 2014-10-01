@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -25,13 +25,10 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import io.wcm.testing.mock.aem.junit.AemContext;
-import io.wcm.testing.mock.sling.contentimport.JsonImporter;
 
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 
-import org.apache.commons.collections4.IteratorUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.ModifiableValueMap;
 import org.apache.sling.api.resource.PersistenceException;
@@ -43,21 +40,18 @@ import org.junit.Test;
 import com.day.cq.commons.Filter;
 import com.day.cq.wcm.api.NameConstants;
 import com.day.cq.wcm.api.Page;
+import com.google.common.collect.ImmutableList;
 
-@SuppressWarnings("javadoc")
 public class MockPageTest {
 
-  //CHECKSTYLE:OFF
   @Rule
-  public final AemContext context = new AemContext();
-  //CHECKSTYLE:ON
+  public AemContext context = new AemContext();
 
   private Page page;
 
   @Before
   public void setUp() throws Exception {
-    JsonImporter jsonImporter = this.context.jsonImporter();
-    jsonImporter.importTo("/json-import-samples/content.json", "/content/sample/en");
+    context.load().json("/json-import-samples/content.json", "/content/sample/en");
 
     Resource resource = this.context.resourceResolver().getResource("/content/sample/en");
     this.page = resource.adaptTo(Page.class);
@@ -179,17 +173,17 @@ public class MockPageTest {
   }
 
   @Test
-  public void testTemplate() throws PersistenceException, IOException {
-    this.context.jsonImporter().importTo("/json-import-samples/application.json", "/apps/sample");
+  public void testTemplate() {
+    this.context.load().json("/json-import-samples/application.json", "/apps/sample");
     assertNotNull(this.page.getTemplate());
   }
 
   @Test
   public void testListChildren() {
-    List<Page> childPages = IteratorUtils.toList(this.page.listChildren());
+    List<Page> childPages = ImmutableList.copyOf(this.page.listChildren());
     assertEquals(1, childPages.size());
 
-    childPages = IteratorUtils.toList(this.page.listChildren(new Filter<Page>() {
+    childPages = ImmutableList.copyOf(this.page.listChildren(new Filter<Page>() {
       @Override
       public boolean includes(final Page element) {
         return !StringUtils.equals("toolbar", element.getName());
