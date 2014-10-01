@@ -19,23 +19,15 @@
  */
 package io.wcm.testing.mock.sling.servlet;
 
-import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Locale;
-import java.util.Set;
-import java.util.TimeZone;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.CharEncoding;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletResponse;
 import org.apache.sling.api.adapter.SlingAdaptable;
@@ -43,34 +35,32 @@ import org.apache.sling.api.adapter.SlingAdaptable;
 /**
  * Mock {@link SlingHttpServletResponse} implementation.
  */
-public final class MockSlingHttpServletResponse extends SlingAdaptable implements SlingHttpServletResponse {
+public class MockSlingHttpServletResponse extends SlingAdaptable implements SlingHttpServletResponse {
 
   private static final String CHARSET_SEPARATOR = ";charset=";
 
-  private static final String RFC_1123_DATE_PATTERN = "EEE, dd MMM yyyy HH:mm:ss z";
-  private static final DateFormat RFC1123_DATE_FORMAT = new SimpleDateFormat(RFC_1123_DATE_PATTERN, Locale.US);
-  static {
-    RFC1123_DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("GMT"));
-  }
-
-  private String contentType = "text/html";
-  private String characterEncoding;
+  private String contentType;
+  private String characterEncoding = CharEncoding.ISO_8859_1;
   private int contentLength;
-  private int status = 200;
-  private final List<HeaderValue> headers = new ArrayList<>();
-
-  @Override
-  public void flushBuffer() throws IOException {
-    // ignore
-  }
+  private int status = HttpServletResponse.SC_OK;
+  private int bufferSize = 1024 * 8;
+  private boolean isCommitted;
+  private final HeaderSupport headerSupport = new HeaderSupport();
+  private final ResponseBodySupport bodySupport = new ResponseBodySupport();
+  private final CookieSupport cookieSupport = new CookieSupport();
 
   @Override
   public String getContentType() {
-    return this.contentType + (StringUtils.isNotBlank(characterEncoding) ? CHARSET_SEPARATOR + characterEncoding : "");
+    if (this.contentType == null) {
+      return null;
+    }
+    else {
+      return this.contentType + (StringUtils.isNotBlank(characterEncoding) ? CHARSET_SEPARATOR + characterEncoding : "");
+    }
   }
 
   @Override
-  public void setContentType(final String type) {
+  public void setContentType(String type) {
     this.contentType = type;
     if (StringUtils.contains(this.contentType, CHARSET_SEPARATOR)) {
       this.characterEncoding = StringUtils.substringAfter(this.contentType, CHARSET_SEPARATOR);
@@ -79,7 +69,7 @@ public final class MockSlingHttpServletResponse extends SlingAdaptable implement
   }
 
   @Override
-  public void setCharacterEncoding(final String charset) {
+  public void setCharacterEncoding(String charset) {
     this.characterEncoding = charset;
   }
 
@@ -89,7 +79,7 @@ public final class MockSlingHttpServletResponse extends SlingAdaptable implement
   }
 
   @Override
-  public void setContentLength(final int len) {
+  public void setContentLength(int len) {
     this.contentLength = len;
   }
 
@@ -98,12 +88,12 @@ public final class MockSlingHttpServletResponse extends SlingAdaptable implement
   }
 
   @Override
-  public void setStatus(final int sc, final String sm) {
+  public void setStatus(int sc, String sm) {
     setStatus(sc);
   }
 
   @Override
-  public void setStatus(final int sc) {
+  public void setStatus(int sc) {
     this.status = sc;
   }
 
@@ -113,197 +103,180 @@ public final class MockSlingHttpServletResponse extends SlingAdaptable implement
   }
 
   @Override
-  public void sendError(final int sc, final String msg) {
+  public void sendError(int sc, String msg) {
     setStatus(sc);
   }
 
   @Override
-  public void sendError(final int sc) {
+  public void sendError(int sc) {
     setStatus(sc);
   }
 
   @Override
-  public void sendRedirect(final String location) {
-    setStatus(302);
+  public void sendRedirect(String location) {
+    setStatus(HttpServletResponse.SC_MOVED_TEMPORARILY);
     setHeader("Location", location);
   }
 
   @Override
-  public void addHeader(final String name, final String value) {
-    headers.add(new HeaderValue(name, value));
+  public void addHeader(String name, String value) {
+    headerSupport.addHeader(name, value);
   }
 
   @Override
-  public void addIntHeader(final String name, final int value) {
-    headers.add(new HeaderValue(name, Integer.toString(value)));
+  public void addIntHeader(String name, int value) {
+    headerSupport.addIntHeader(name, value);
   }
 
   @Override
-  public void addDateHeader(final String name, final long date) {
-    headers.add(new HeaderValue(name, formatDate(new Date(date))));
+  public void addDateHeader(String name, long date) {
+    headerSupport.addDateHeader(name, date);
   }
 
   @Override
-  public void setHeader(final String name, final String value) {
-    removeHeaders(name);
-    addHeader(name, value);
+  public void setHeader(String name, String value) {
+    headerSupport.setHeader(name, value);
   }
 
   @Override
-  public void setIntHeader(final String name, final int value) {
-    removeHeaders(name);
-    addIntHeader(name, value);
+  public void setIntHeader(String name, int value) {
+    headerSupport.setIntHeader(name, value);
   }
 
   @Override
-  public void setDateHeader(final String name, final long date) {
-    removeHeaders(name);
-    addDateHeader(name, date);
-  }
-
-  private void removeHeaders(final String name) {
-    for (int i = this.headers.size() - 1; i >= 0; i--) {
-      if (StringUtils.equals(this.headers.get(i).getKey(), name)) {
-        headers.remove(i);
-      }
-    }
+  public void setDateHeader(String name, long date) {
+    headerSupport.setDateHeader(name, date);
   }
 
   @Override
-  public boolean containsHeader(final String name) {
-    return !getHeaders(name).isEmpty();
+  public boolean containsHeader(String name) {
+    return headerSupport.containsHeader(name);
   }
 
   @Override
-  public String getHeader(final String name) {
-    Collection<String> values = getHeaders(name);
-    if (!values.isEmpty()) {
-      return values.iterator().next();
-    }
-    else {
-      return null;
-    }
+  public String getHeader(String name) {
+    return headerSupport.getHeader(name);
   }
 
   @Override
-  public Collection<String> getHeaders(final String name) {
-    List<String> values = new ArrayList<>();
-    for (HeaderValue entry : headers) {
-      if (StringUtils.equals(entry.getKey(), name)) {
-        values.add(entry.getValue());
-      }
-    }
-    return values;
+  public Collection<String> getHeaders(String name) {
+    return headerSupport.getHeaders(name);
   }
 
   @Override
   public Collection<String> getHeaderNames() {
-    Set<String> values = new HashSet<>();
-    for (HeaderValue entry : headers) {
-      values.add(entry.getKey());
+    return headerSupport.getHeaderNames();
+  }
+
+  @Override
+  public PrintWriter getWriter() {
+    return bodySupport.getWriter(getCharacterEncoding());
+  }
+
+  @Override
+  public ServletOutputStream getOutputStream() {
+    return bodySupport.getOutputStream();
+  }
+
+  @Override
+  public void reset() {
+    if (isCommitted()) {
+      throw new IllegalStateException("Response already committed.");
     }
-    return values;
+    bodySupport.reset();
+    headerSupport.reset();
+    cookieSupport.reset();
+    status = HttpServletResponse.SC_OK;
+    contentLength = 0;
   }
 
-  static synchronized String formatDate(Date pDate) {
-    return RFC1123_DATE_FORMAT.format(pDate);
+  @Override
+  public void resetBuffer() {
+    if (isCommitted()) {
+      throw new IllegalStateException("Response already committed.");
+    }
+    bodySupport.reset();
   }
 
-  static synchronized Date parseDate(String pDateString) throws ParseException {
-    return RFC1123_DATE_FORMAT.parse(pDateString);
+  @Override
+  public int getBufferSize() {
+    return this.bufferSize;
+  }
+
+  @Override
+  public void setBufferSize(int size) {
+    this.bufferSize = size;
+  }
+
+  @Override
+  public void flushBuffer() {
+    isCommitted = true;
+  }
+
+  @Override
+  public boolean isCommitted() {
+    return isCommitted;
+  }
+
+  public byte[] getOutput() {
+    return bodySupport.getOutput();
+  }
+
+  public String getOutputAsString() {
+    return bodySupport.getOutputAsString(getCharacterEncoding());
+  }
+
+  @Override
+  public void addCookie(Cookie cookie) {
+    cookieSupport.addCookie(cookie);
+  }
+
+  /**
+   * Get cookie
+   * @param name Cookie name
+   * @return Cookie or null
+   */
+  public Cookie getCookie(String name) {
+    return cookieSupport.getCookie(name);
+  }
+
+  /**
+   * Get cookies
+   * @return Cookies array or null if no cookie defined
+   */
+  public Cookie[] getCookies() {
+    return cookieSupport.getCookies();
   }
 
 
   // --- unsupported operations ---
-  @Override
-  public int getBufferSize() {
-    throw new UnsupportedOperationException();
-  }
-
   @Override
   public Locale getLocale() {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public ServletOutputStream getOutputStream() {
+  public void setLocale(Locale loc) {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public PrintWriter getWriter() {
+  public String encodeRedirectUrl(String url) {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public boolean isCommitted() {
+  public String encodeRedirectURL(String url) {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public void reset() {
+  public String encodeUrl(String url) {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public void resetBuffer() {
+  public String encodeURL(String url) {
     throw new UnsupportedOperationException();
   }
-
-  @Override
-  public void setBufferSize(final int size) {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public void setLocale(final Locale loc) {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public void addCookie(final Cookie cookie) {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public String encodeRedirectUrl(final String url) {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public String encodeRedirectURL(final String url) {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public String encodeUrl(final String url) {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public String encodeURL(final String url) {
-    throw new UnsupportedOperationException();
-  }
-
-
-  private static class HeaderValue {
-
-    private final String key;
-    private final String value;
-
-    public HeaderValue(String key, String value) {
-      this.key = key;
-      this.value = value;
-    }
-
-    public String getKey() {
-      return this.key;
-    }
-
-    public String getValue() {
-      return this.value;
-    }
-
-  }
-
 }

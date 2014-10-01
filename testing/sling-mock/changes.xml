@@ -23,6 +23,19 @@
     xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/plugins/maven-changes-plugin/xsd/changes-1.0.0.xsd">
   <body>
 
+    <release version="1.0.1-SNAPSHOT" date="not released">
+      <action type="update" dev="sseifert">
+        MockSlingHttpServletRequest: accept any map values for setParameterMap method, support HTTP method,
+        support request headers, support cookies.
+      </action>
+      <action type="update" dev="sseifert">
+        MockSlingHttpServletResponse: support writing data to output stream or print writer, support cookies.
+      </action>
+      <action type="update" dev="sseifert">
+        MockSlingScriptHelper: fix casting problem with array from getServices method.
+      </action>
+    </release>
+
     <release version="1.0.0" date="2014-09-19">
       <action type="add" dev="sseifert">
         Initial release.

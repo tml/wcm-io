@@ -19,21 +19,26 @@
  */
 package io.wcm.testing.mock.sling.servlet;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
-import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
 
-import org.apache.sling.api.SlingHttpServletResponse;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang3.CharEncoding;
 import org.junit.Before;
 import org.junit.Test;
 
 public class MockSlingHttpServletResponseTest {
 
-  private SlingHttpServletResponse response;
+  private MockSlingHttpServletResponse response;
 
   @Before
   public void setUp() throws Exception {
@@ -41,27 +46,21 @@ public class MockSlingHttpServletResponseTest {
   }
 
   @Test
-  public void testFlushBuffer() throws IOException {
-    // does nothing, but can be called
-    this.response.flushBuffer();
-  }
-
-  @Test
   public void testContentTypeCharset() throws Exception {
-    assertEquals("text/html", response.getContentType());
-    assertNull(response.getCharacterEncoding());
+    assertNull(response.getContentType());
+    assertEquals(CharEncoding.ISO_8859_1, response.getCharacterEncoding());
 
     response.setContentType("text/plain;charset=UTF-8");
     assertEquals("text/plain;charset=UTF-8", response.getContentType());
-    assertEquals("UTF-8", response.getCharacterEncoding());
+    assertEquals(CharEncoding.UTF_8, response.getCharacterEncoding());
   }
 
   @Test
   public void testContentLength() throws Exception {
-    assertEquals(0, ((MockSlingHttpServletResponse)response).getContentLength());
+    assertEquals(0, response.getContentLength());
 
     response.setContentLength(55);
-    assertEquals(55, ((MockSlingHttpServletResponse)response).getContentLength());
+    assertEquals(55, response.getContentLength());
   }
 
   @Test
@@ -73,6 +72,7 @@ public class MockSlingHttpServletResponseTest {
     response.addDateHeader("header3", System.currentTimeMillis());
 
     assertEquals(3, response.getHeaderNames().size());
+    assertTrue(response.containsHeader("header1"));
     assertEquals("value1", response.getHeader("header1"));
     assertEquals("5", response.getHeader("header2"));
     assertNotNull(response.getHeader("header3"));
@@ -91,13 +91,81 @@ public class MockSlingHttpServletResponseTest {
     Iterator<String> header2Iterator = header2Values.iterator();
     assertEquals("5", header2Iterator.next());
     assertEquals("10", header2Iterator.next());
+
+    response.reset();
+    assertEquals(0, response.getHeaderNames().size());
   }
 
   @Test
   public void testRedirect() throws Exception {
     response.sendRedirect("/location.html");
-    assertEquals(302, response.getStatus());
+    assertEquals(HttpServletResponse.SC_MOVED_TEMPORARILY, response.getStatus());
     assertEquals("/location.html", response.getHeader("Location"));
+  }
+
+  @Test
+  public void testSendError() throws Exception {
+    response.sendError(HttpServletResponse.SC_NOT_FOUND);
+    assertEquals(HttpServletResponse.SC_NOT_FOUND, response.getStatus());
+  }
+
+  @Test
+  public void testSetStatus() throws Exception {
+    assertEquals(HttpServletResponse.SC_OK, response.getStatus());
+
+    response.setStatus(HttpServletResponse.SC_BAD_GATEWAY);
+    assertEquals(HttpServletResponse.SC_BAD_GATEWAY, response.getStatus());
+
+    response.reset();
+    assertEquals(HttpServletResponse.SC_OK, response.getStatus());
+  }
+
+  @Test
+  public void testWriteStringContent() throws Exception {
+    final String TEST_CONTENT = "Der Jodelkaiser äöüß€ ᚠᛇᚻ";
+    response.setCharacterEncoding(CharEncoding.UTF_8);
+    response.getWriter().write(TEST_CONTENT);
+    assertEquals(TEST_CONTENT, response.getOutputAsString());
+
+    response.resetBuffer();
+    assertEquals(0, response.getOutputAsString().length());
+  }
+
+  @Test
+  public void testWriteBinaryContent() throws Exception {
+    final byte[] TEST_DATA = new byte[] {
+        0x01, 0x02, 0x03, 0x04, 0x05
+    };
+    response.getOutputStream().write(TEST_DATA);
+    assertArrayEquals(TEST_DATA, response.getOutput());
+
+    response.resetBuffer();
+    assertEquals(0, response.getOutput().length);
+  }
+
+  @Test
+  public void testIsCommitted() throws Exception {
+    assertFalse(response.isCommitted());
+    response.flushBuffer();
+    assertTrue(response.isCommitted());
+  }
+
+  @Test
+  public void testCookies() {
+    assertNull(response.getCookies());
+
+    response.addCookie(new Cookie("cookie1", "value1"));
+    response.addCookie(new Cookie("cookie2", "value2"));
+
+    assertEquals("value1", response.getCookie("cookie1").getValue());
+
+    Cookie[] cookies = response.getCookies();
+    assertEquals(2, cookies.length);
+    assertEquals("value1", cookies[0].getValue());
+    assertEquals("value2", cookies[1].getValue());
+
+    response.reset();
+    assertNull(response.getCookies());
   }
 
 }
