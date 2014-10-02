@@ -22,10 +22,10 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>io.wcm.maven</groupId>
-    <artifactId>io.wcm.maven.global-parent</artifactId>
-    <version>3</version>
-    <relativePath />
+    <groupId>io.wcm</groupId>
+    <artifactId>io.wcm.parent_toplevel</artifactId>
+    <version>1.0.2-SNAPSHOT</version>
+    <relativePath>../../../parent_toplevel/pom.xml</relativePath>
   </parent>
 
   <groupId>io.wcm.maven.plugins</groupId>
@@ -42,6 +42,10 @@
     <url>https://github.com/wcm-io/wcm-io</url>
     <tag>HEAD</tag>
   </scm>
+
+  <properties>
+    <site.url.module.prefix>maven/plugins/nodejs-maven-plugin</site.url.module.prefix>
+  </properties>
 
   <dependencies>
     <dependency>
@@ -132,5 +136,12 @@
       </plugins>
     </pluginManagement>
   </build>
+
+  <distributionManagement>
+    <site>
+      <id>${site.deploy.id}</id>
+      <url>${site.deploy.url}${site.url.module.prefix}</url>
+    </site>
+  </distributionManagement>
 
 </project>
