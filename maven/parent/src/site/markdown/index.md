@@ -2,6 +2,7 @@
 
 Maven Parent POMs, Build Tools and Plugins.
 
+
 ### Parent POMs and Build Tools
 
 * Global Parent: Global parent for Maven artifact hierarchy. _*<sup>)</sup>_
@@ -9,8 +10,9 @@ Maven Parent POMs, Build Tools and Plugins.
 * AEM Global Parent: Global parent for Maven artifact hierarchy for AEM projects. _*<sup>)</sup>_
 * AEM Dependencies: Defines Maven dependencies for a specific AEM version. _*<sup>)</sup>_
 
+_*<sup>) Documentation will be added soon.</sup>_
+
+
 ### Maven Plugins
 
 * [Node.js Maven Plugin](plugins/nodejs-maven-plugin/)
-
-_*<sup>) Documentation will be added soon.</sup>_
