@@ -11,6 +11,6 @@ Maven Parent POMs, Build Tools and Plugins.
 
 ### Maven Plugins
 
-* [NodeJS Maven Plugin](plugins/nodejs-maven-plugin/)
+* [Node.js Maven Plugin](plugins/nodejs-maven-plugin/)
 
 _*<sup>) Documentation will be added soon.</sup>_

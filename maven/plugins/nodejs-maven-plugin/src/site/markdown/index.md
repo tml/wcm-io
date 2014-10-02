@@ -1,9 +1,9 @@
-NodeJS Maven Plugin
+Node.js Maven Plugin
 ===================
 
 This plugin is based on https://github.com/ClearboxSystems/NodeJsMaven.
 
-Wraps the nodejs executables (nodejs and npm) in a maven plugin. Provides following configuration options:
+Wraps the [Node.js](http://nodejs.org/) executables (nodejs and npm) in a maven plugin. Provides following configuration options:
 
 - installation directory for nodes and npm (java.tmp.dir per default)
 - version for nodejs and npm
