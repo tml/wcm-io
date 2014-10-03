@@ -9,12 +9,14 @@ development and maintenance. wcm.io can be used freely and is released under
 
 ### Issues (bug and feature tracker)
 
-Please report any bugs found, feature requests or other issues on
-[wcm.io GitHub tracker][reflow-issues].
+Please report any bugs found, feature requests or other issues on [JIRA][issues].
 
 When creating a new issue, try following [necolas's guidelines][issue-guidelines].
 
-[reflow-issues]: http://github.com/wcm-io/wcm-io/issues/
+The project's wiki is hosted in [Confluence][wiki].
+
+[issues]: https://wcm-io.atlassian.net/
+[wiki]: https://wcm-io.atlassian.net/wiki/
 [issue-guidelines]: http://github.com/necolas/issue-guidelines/#readme
 
 
