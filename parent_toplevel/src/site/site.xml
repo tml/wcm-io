@@ -133,6 +133,7 @@
       <item name="Contribute" href="http://wcm.io/contribute.html" />
       <item name="Manifest" href="http://wcm.io/manifest.html" />
       <item name="Issues" href="https://wcm-io.atlassian.net" />
+      <item name="Wiki" href="https://wcm-io.atlassian.net/wiki/" />
       <item name="Continuous Integration" href="https://travis-ci.org/wcm-io/wcm-io/" />
       <item name="Fork on GitHub" href="http://github.com/wcm-io/wcm-io/" />
     </menu>
