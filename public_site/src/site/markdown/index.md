@@ -17,7 +17,7 @@ Overview of modules by category:
 * [Sling](sling/)
 * [Testing](testing/)
 * [Samples](samples/)
-* [Maven Tooling](maven/)
+* [Tooling](tooling/)
 
 
 

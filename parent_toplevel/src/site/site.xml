@@ -127,7 +127,7 @@
       <item name="Sling" href="../sling/"/>
       <item name="Testing" href="../testing/"/>
       <item name="Samples" href="../samples/"/>
-      <item name="Maven Tooling" href="../maven/"/>
+      <item name="Tooling" href="../tooling/"/>
     </menu>
     <menu name="Contribute" inherit="top">
       <item name="Contribute" href="http://wcm.io/contribute.html" />
