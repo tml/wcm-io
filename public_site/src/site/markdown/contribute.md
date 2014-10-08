@@ -7,7 +7,7 @@ development and maintenance. wcm.io can be used freely and is released under
 [apache-license]: http://www.apache.org/licenses/LICENSE-2.0
 
 
-### Issues (bug and feature tracker)
+### Collaboration tools (Issues, Wiki, Mailing Lists)
 
 Please report any bugs found, feature requests or other issues on [JIRA][jira]. You can signup [here][jira-signup].
 
@@ -15,10 +15,14 @@ When creating a new issue, try following [necolas's guidelines][issue-guidelines
 
 The project's wiki is hosted in [Confluence][confluence].
 
+Overview over the project's [mailing lists][mailing-lists].
+
+
 [jira]: https://wcm-io.atlassian.net/
 [jira-signup]: https://wcm-io.atlassian.net/admin/users/sign-up
 [confluence]: https://wcm-io.atlassian.net/wiki/
 [issue-guidelines]: http://github.com/necolas/issue-guidelines/#readme
+[mailing-lists]: http://wcm.io/mailing-lists.html
 
 
 ### Fork, patch and contribute code
