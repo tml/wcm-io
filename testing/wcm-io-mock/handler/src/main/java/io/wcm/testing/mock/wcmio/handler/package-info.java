@@ -18,7 +18,7 @@
  * #L%
  */
 /**
- * API for applications accessing configuration.
+ * Helps setting up mock environment for wcm.io Handler.
  */
 @aQute.bnd.annotation.Version("0.2.0")
-package io.wcm.config.api;
+package io.wcm.testing.mock.wcmio.handler;

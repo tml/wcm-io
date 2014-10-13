@@ -26,10 +26,13 @@ package io.wcm.testing.junit.rules.parameterized;
  */
 import org.junit.rules.TestRule;
 
+import aQute.bnd.annotation.ConsumerType;
+
 /**
  * Generic rule for parametrizing JUnit tests.
  * @param <T> Parameter type
  */
+@ConsumerType
 public interface Generator<T> extends TestRule {
 
   /**
