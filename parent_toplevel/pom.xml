@@ -53,8 +53,8 @@
   </organization>
 
   <issueManagement>
-    <system>GitHub</system>
-    <url>https://github.com/wcm-io/wcm-io/issues</url>
+    <system>JIRA</system>
+    <url>https://wcm-io.atlassian.net/browse/</url>
   </issueManagement>
 
   <ciManagement>
