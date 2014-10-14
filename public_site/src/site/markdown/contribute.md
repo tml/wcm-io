@@ -37,6 +37,20 @@ Contribute your fixes and new features back to the main codebase using
 [github-pull-req]: http://help.github.com/articles/using-pull-requests
 
 
+
+### Build from sources
+
+If you want to build wcm.io from sources make sure you have configured all [Maven Repositories](maven.html) in your settings.xml.
+
+See [Travis Maven settings.xml](https://github.com/wcm-io/wcm-io/blob/master/.travis.maven-settings.xml) for an example with a full configuration.
+
+Then you can build using
+
+```
+mvn clean install
+```
+
+
 ### Acknowledgements
 
 wcm.io was initially contributed and is sponsered by [pro!vision GmbH][pro-vision]
