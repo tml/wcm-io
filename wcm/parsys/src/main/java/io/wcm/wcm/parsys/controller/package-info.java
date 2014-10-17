@@ -18,6 +18,7 @@
  * #L%
  */
 /**
- * Default implementations of {@link io.wcm.config.spi.ParameterPersistenceProvider}.
+ * Sling models controller classes for paragraph system components.
  */
-package io.wcm.config.core.persistence.impl;
+@org.osgi.annotation.versioning.Version("0.2.0")
+package io.wcm.wcm.parsys.controller;

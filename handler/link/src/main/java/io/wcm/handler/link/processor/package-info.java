@@ -18,6 +18,7 @@
  * #L%
  */
 /**
- * Default implementations of {@link io.wcm.config.spi.ParameterOverrideProvider}.
+ * Default implementations for link pre- and postprocessors.
  */
-package io.wcm.config.core.override.impl;
+@org.osgi.annotation.versioning.Version("0.2.0")
+package io.wcm.handler.link.processor;
