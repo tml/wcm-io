@@ -174,7 +174,7 @@
           </execution>
         </executions>
       </plugin>
-      
+
       <!-- bnd baseline check -->
       <plugin>
         <groupId>org.apache.felix</groupId>
@@ -288,7 +288,7 @@
 
     </plugins>
   </reporting>
-  
+
   <profiles>
     <!-- profile used for building releases and deployment to sonatype/maven central -->
     <profile>
