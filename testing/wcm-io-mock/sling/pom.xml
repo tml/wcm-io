@@ -24,18 +24,18 @@
 
   <parent>
     <groupId>io.wcm</groupId>
-    <artifactId>io.wcm.wcm.parent</artifactId>
-    <version>0.2.0-SNAPSHOT</version>
+    <artifactId>io.wcm.testing.parent</artifactId>
+    <version>1.0.2</version>
     <relativePath>../../parent/pom.xml</relativePath>
   </parent>
 
   <groupId>io.wcm</groupId>
-  <artifactId>io.wcm.wcm.ui.granite</artifactId>
+  <artifactId>io.wcm.testing.wcm-io-mock.sling</artifactId>
   <version>0.2.0-SNAPSHOT</version>
   <packaging>bundle</packaging>
 
-  <name>WCM Granite UI Extensions</name>
-  <description>Granite UI Components for AEM Touch UI.</description>
+  <name>Sling Extensions Mocks</name>
+  <description>Helps setting up mock environment for wcm.io Sling Commons and Sling Models Extensions.</description>
 
   <scm>
     <connection>scm:git:git@github.com:wcm-io/wcm-io.git</connection>
@@ -45,10 +45,17 @@
   </scm>
 
   <properties>
-    <site.url.module.prefix>wcm/ui/granite</site.url.module.prefix>
+    <site.url.module.prefix>wcm-io-mock/sling</site.url.module.prefix>
   </properties>
 
   <dependencies>
+
+    <dependency>
+      <groupId>io.wcm</groupId>
+      <artifactId>io.wcm.testing.aem-mock</artifactId>
+      <version>1.2.1-SNAPSHOT</version>
+      <scope>compile</scope>
+    </dependency>
 
     <dependency>
       <groupId>io.wcm</groupId>
@@ -56,12 +63,12 @@
       <version>0.2.0-SNAPSHOT</version>
       <scope>compile</scope>
     </dependency>
-
+    
     <dependency>
       <groupId>io.wcm</groupId>
-      <artifactId>io.wcm.testing.aem-mock</artifactId>
-      <version>1.2.1-SNAPSHOT</version>
-      <scope>test</scope>
+      <artifactId>io.wcm.sling.models</artifactId>
+      <version>1.0.1-SNAPSHOT</version>
+      <scope>compile</scope>
     </dependency>
 
   </dependencies>
@@ -78,52 +85,16 @@
         </configuration>
       </plugin>
 
+      <!-- do not generate site for this project -->
       <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
         <configuration>
-          <instructions>
-            <Sling-Initial-Content>
-              SLING-INF/app-root;overwrite:=true;ignoreImportProviders:=xml;path:=/apps/wcm-io/wcm/ui/granite
-            </Sling-Initial-Content>
-          </instructions>
+          <skipDeploy>true</skipDeploy>
         </configuration>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-scr-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>generate-scr-scrdescriptor</id>
-            <goals>
-              <goal>scr</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.sling</groupId>
-        <artifactId>maven-sling-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>validate-bundle</id>
-            <goals>
-              <goal>validate</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
 
     </plugins>
   </build>
-
-  <distributionManagement>
-    <site>
-      <id>${site.deploy.id}</id>
-      <url>${site.deploy.url}${site.url.module.prefix}</url>
-    </site>
-  </distributionManagement>
 
 </project>
