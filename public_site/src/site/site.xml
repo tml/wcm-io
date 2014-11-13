@@ -36,18 +36,24 @@
           <toc>false</toc>
           <markPageHeader>false</markPageHeader>
         </index>
+        <imprint>
+          <breadcrumbs>false</breadcrumbs>
+        </imprint>
+        <contribute>
+          <breadcrumbs>false</breadcrumbs>
+        </contribute>
+        <mailing-lists>
+          <breadcrumbs>false</breadcrumbs>
+        </mailing-lists>
+        <manifest>
+          <breadcrumbs>false</breadcrumbs>
+        </manifest>
         <maven>
           <breadcrumbs>false</breadcrumbs>
         </maven>
         <platforms>
           <breadcrumbs>false</breadcrumbs>
         </platforms>
-        <contribute>
-          <breadcrumbs>false</breadcrumbs>
-        </contribute>
-        <manifest>
-          <breadcrumbs>false</breadcrumbs>
-        </manifest>
       </pages>
     </reflowSkin>
   </custom>

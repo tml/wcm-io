@@ -1,4 +1,4 @@
-wcm-io
+<img src="http://wcm.io/images/favicon-16@3x.png"/> wcm-io
 ======
 
 wcm.io is an Open Source project which provides libraries and extensions for AEM-based applications.
