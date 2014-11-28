@@ -1,6 +1,6 @@
 <img src="http://wcm.io/images/favicon-16@2x.png"/> wcm-io
 ======
-[![Build Status](https://travis-ci.orgwcm-io/wcm-io.png?branch=master)](https://travis-ci.orgwcm-io/wcm-io)
+[![Build Status](https://travis-ci.org/wcm-io/wcm-io.png?branch=master)](https://travis-ci.org/wcm-io/wcm-io)
 
 wcm.io is an Open Source project which provides libraries and extensions for AEM-based applications.
 
