@@ -1,3 +1,4 @@
+<img src="https://api.travis-ci.org/wcm-io/wcm-io.svg?branch=master" style="float:right"/>
 <img src="http://wcm.io/images/favicon-16@2x.png"/> wcm-io
 ======
 
