@@ -22,7 +22,7 @@ wcm.io depends on the Adobe Public Maven Repository:
   <repository>
     <id>adobe-public-releases</id>
     <name>Adobe Public Repository</name>
-    <url>http://repo.adobe.com/nexus/content/groups/public</url>
+    <url>https://repo.adobe.com/nexus/content/groups/public/</url>
     <releases>
       <enabled>true</enabled>
       <updatePolicy>never</updatePolicy>
@@ -36,7 +36,7 @@ wcm.io depends on the Adobe Public Maven Repository:
 <pluginRepository>
   <id>adobe-public-releases</id>
   <name>Adobe Public Repository</name>
-  <url>http://repo.adobe.com/nexus/content/groups/public</url>
+  <url>https://repo.adobe.com/nexus/content/groups/public/</url>
   <releases>
     <enabled>true</enabled>
     <updatePolicy>never</updatePolicy>
