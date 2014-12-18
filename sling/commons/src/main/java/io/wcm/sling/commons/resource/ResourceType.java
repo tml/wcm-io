@@ -17,16 +17,18 @@
  * limitations under the License.
  * #L%
  */
-package io.wcm.wcm.parsys.componentinfo.impl;
+package io.wcm.sling.commons.resource;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ResourceResolver;
 
 /**
  * Helper methods for resource type path handling.
  */
-public final class ResourceTypeUtil {
+public final class ResourceType {
 
-  private ResourceTypeUtil() {
+  private ResourceType() {
     // utility methods only
   }
 
@@ -36,17 +38,18 @@ public final class ResourceTypeUtil {
   public static final String APPS_PREFIX = "/apps/";
 
   /**
-   * Converts the resource type to an absolute path. If it does not start with "/", "/apps/" is prepended.
-   * Otherwise it is returned unchanged.
+   * Converts the resource type to an absolute path. If it does not start with "/" the resource is resolved
+   * via search paths using resource resolver. If not matching resource is found it is returned unchanged.
    * @param resourceType Resource type
-   * @return Normalized resource type
+   * @return Absolute resource type
    */
-  public static String makeAbsolute(String resourceType) {
-    if (StringUtils.isEmpty(resourceType)) {
+  public static String makeAbsolute(String resourceType, ResourceResolver resourceResolver) {
+    if (StringUtils.isEmpty(resourceType) || StringUtils.startsWith(resourceType, "/")) {
       return resourceType;
     }
-    if (!StringUtils.startsWith(resourceType, "/")) {
-      return APPS_PREFIX + resourceType;
+    Resource resource = resourceResolver.getResource(resourceType);
+    if (resource != null) {
+      return resource.getPath();
     }
     else {
       return resourceType;
