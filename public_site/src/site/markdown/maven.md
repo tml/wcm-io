@@ -8,7 +8,7 @@ http://search.maven.org/#search|ga|1|io.wcm
 
 Snapshots releases are available on the Sonatype snapshot repository - use at your own risk!
 
-https://oss.sonatype.org/content/repositories/snapshots/io/wcm/
+https://oss.sonatype.org/content/repositories/snapshots/
 
 The maven artifact coordinates are documented on the index page of each wcm.io module.
 
@@ -18,20 +18,18 @@ The maven artifact coordinates are documented on the index page of each wcm.io m
 wcm.io depends on the Adobe Public Maven Repository:
 
 ```xml
-<repositories>
-  <repository>
-    <id>adobe-public-releases</id>
-    <name>Adobe Public Repository</name>
-    <url>https://repo.adobe.com/nexus/content/groups/public/</url>
-    <releases>
-      <enabled>true</enabled>
-      <updatePolicy>never</updatePolicy>
-    </releases>
-    <snapshots>
-      <enabled>false</enabled>
-    </snapshots>
-  </repository>
-</repositories>
+<repository>
+  <id>adobe-public-releases</id>
+  <name>Adobe Public Repository</name>
+  <url>https://repo.adobe.com/nexus/content/groups/public/</url>
+  <releases>
+    <enabled>true</enabled>
+    <updatePolicy>never</updatePolicy>
+  </releases>
+  <snapshots>
+    <enabled>false</enabled>
+  </snapshots>
+</repository>
 
 <pluginRepository>
   <id>adobe-public-releases</id>
