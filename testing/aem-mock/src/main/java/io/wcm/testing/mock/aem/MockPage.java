@@ -382,4 +382,14 @@ class MockPage extends SlingAdaptable implements Page {
     throw new UnsupportedOperationException();
   }
 
+  @Override
+  public Calendar getDeleted() {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public String getDeletedBy() {
+    throw new UnsupportedOperationException();
+  }
+
 }
