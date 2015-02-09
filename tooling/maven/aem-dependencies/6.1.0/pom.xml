@@ -87,7 +87,7 @@
       <dependency>
         <groupId>com.adobe.aem</groupId>
         <artifactId>aem-api</artifactId>
-        <version>6.1.0-beta</version>
+        <version>6.1.0-beta3</version>
       </dependency>
       <dependency>
         <groupId>com.day.cq.wcm</groupId>
