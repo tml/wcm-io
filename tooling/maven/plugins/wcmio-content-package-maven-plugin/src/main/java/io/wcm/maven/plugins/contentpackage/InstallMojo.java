@@ -130,31 +130,23 @@ public final class InstallMojo extends AbstractContentPackageMojo {
     if (packageFiles != null && packageFiles.length > 0) {
       for (PackageFile ref : packageFiles) {
         File file = helper.getArtifactFile(ref.getArtifactId(), ref.getGroupId(), ref.getVersion(), ref.getType(), ref.getArtifact());
+        if (file == null) {
+          file = ref.getPackageFile();
+        }
         if (file != null) {
           installFile(file);
           foundAny = true;
-        }
-        else {
-          file = ref.getPackageFile();
-          if (file != null) {
-            installFile(file);
-            foundAny = true;
-          }
         }
       }
     }
     else {
-      File file = helper.getArtifactFile(this.artifactId, this.groupId, this.version, this.type, this.artifact);
+      File file = helper.getArtifactFile(artifactId, groupId, version, type, artifact);
+      if (file == null) {
+        file = getPackageFile();
+      }
       if (file != null) {
         installFile(file);
         foundAny = true;
-      }
-      else {
-        file = getPackageFile();
-        if (file != null) {
-          installFile(file);
-          foundAny = true;
-        }
       }
     }
     if (!foundAny) {
@@ -166,6 +158,10 @@ public final class InstallMojo extends AbstractContentPackageMojo {
    * Deploy file via package manager
    */
   private void installFile(File file) throws MojoExecutionException {
+
+    // if bundles are still stopping/starting, wait for completion
+    waitForBundlesActivation();
+
     try {
       if (this.install) {
         getLog().info("Upload and install " + file.getName() + " to " + getCrxPackageManagerUrl());
