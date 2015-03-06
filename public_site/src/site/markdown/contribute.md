@@ -33,7 +33,7 @@ updates.
 Contribute your fixes and new features back to the main codebase using
 [GitHub pull requests][github-pull-req].
 
-[wcm-io-github]: http://github.com/wcm-io/wcm-io
+[wcm-io-github]: http://github.com/wcm-io
 [github-pull-req]: http://help.github.com/articles/using-pull-requests
 
 

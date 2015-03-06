@@ -105,7 +105,7 @@
   <body>
 
     <links>
-      <item name="GitHub project" href="http://github.com/wcm-io/wcm-io/" />
+      <item name="GitHub project" href="http://github.com/wcm-io" />
     </links>
 
     <breadcrumbs>
@@ -116,7 +116,7 @@
       <item name="Home" href="http://wcm.io" />
       <item name="Platforms" href="http://wcm.io/platforms.html" />
       <item name="Maven Repositories" href="http://wcm.io/maven.html" />
-      <item name="GitHub project" href="http://github.com/wcm-io/wcm-io/" />
+      <item name="GitHub project" href="http://github.com/wcm-io" />
       <item name="Subprojects" href="http://wcm.io/subprojects.html" />
       <item name="License" href="http://wcm.io/license.html" />
       <item name="Imprint" href="http://wcm.io/imprint.html" />
@@ -136,8 +136,8 @@
       <item name="Issues" href="https://wcm-io.atlassian.net" />
       <item name="Wiki" href="https://wcm-io.atlassian.net/wiki/" />
       <item name="Mailing Lists" href="http://wcm.io/mailing-lists.html" />
-      <item name="Continuous Integration" href="https://travis-ci.org/wcm-io/wcm-io/" />
-      <item name="Fork on GitHub" href="http://github.com/wcm-io/wcm-io/" />
+      <item name="Continuous Integration" href="https://travis-ci.org/" />
+      <item name="Fork on GitHub" href="http://github.com/wcm-io" />
     </menu>
     <menu name="Maven documentation" inherit="top" ref="reports"/>
   </body>
