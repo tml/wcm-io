@@ -19,35 +19,27 @@
   #L%
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>io.wcm.maven</groupId>
-    <artifactId>io.wcm.maven.aem-global-parent</artifactId>
-    <version>1.0.10</version>
-    <relativePath/>
+    <groupId>io.wcm</groupId>
+    <artifactId>io.wcm.tooling.parent</artifactId>
+    <version>1.0.2</version>
+    <relativePath>../parent/pom.xml</relativePath>
   </parent>
 
-  <groupId>io.wcm</groupId>
-  <artifactId>io.wcm.root</artifactId>
+  <groupId>io.wcm.tooling.commons</groupId>
+  <artifactId>io.wcm.tooling.commons</artifactId>
   <version>1</version>
   <packaging>pom</packaging>
 
-  <name>wcm.io Root</name>
-  <description>Root POM for wcm.io Maven hierarchy.</description>
+  <name>Tooling Commons Root</name>
+  <description>Support for AEM tooling.</description>
 
   <modules>
-    <module>parent_toplevel</module>
-    <module>testing</module>
-    <module>sling</module>
-    <module>config</module>
-    <module>wcm</module>
-    <module>handler</module>
-    <module>tooling/commons</module>
-    <module>samples</module>
-    <module>public_site</module>
+    <module>parent</module>
+    <module>content-package-builder</module>
   </modules>
 
   <build>
@@ -72,29 +64,6 @@
       </plugin>
 
     </plugins>
-    <pluginManagement>
-      <plugins>
-
-        <!-- license check -->
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>license-maven-plugin</artifactId>
-          <configuration>
-            <licenseName>apache_v2</licenseName>
-            <addJavaLicenseAfterPackage>false</addJavaLicenseAfterPackage>
-            <projectName>wcm.io</projectName>
-          </configuration>
-        </plugin>
-
-      </plugins>
-    </pluginManagement>
   </build>
-
-  <distributionManagement>
-    <site>
-      <id>${site.deploy.id}</id>
-      <url>${site.deploy.url}root</url>
-    </site>
-  </distributionManagement>
 
 </project>
